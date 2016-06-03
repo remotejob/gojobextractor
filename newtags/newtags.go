@@ -35,7 +35,7 @@ func main() {
 	//	reader.LazyQuotes = true
 	//
 	//	records, err := reader.ReadAll()
-	records := FromCSV("/home/juno/git/jobprotractor/gojobextractor/mytags.csv")
+	records := FromCSV("/home/juno/neonworkspace/gojobextractor/mytags.csv")
 
 	mytags := make(map[string]struct{})
 
@@ -45,7 +45,7 @@ func main() {
 
 	}
 
-	notmytagrecords := FromCSV("/home/juno/git/jobprotractor/gojobextractor/notmytags.csv")
+	notmytagrecords := FromCSV("/home/juno/neonworkspace/gojobextractor/notmytags.csv")
 
 	notmytags := make(map[string]struct{})
 

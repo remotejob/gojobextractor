@@ -1,9 +1,9 @@
 package find_new_offers
 
 import (
-	"find_new_offers/findItems"
-	"find_new_offers/goOnItemPage"
-	"find_new_offers/jobdetails"
+	"github.com/remotejob/gojobextractor/find_new_offers/findItems"
+	"github.com/remotejob/gojobextractor/find_new_offers/goOnItemPage"
+	"github.com/remotejob/gojobextractor/find_new_offers/jobdetails"
 	"fmt"
 	"gopkg.in/mgo.v2"
 	"testing"
@@ -31,7 +31,7 @@ func TestFindNewOffers(t *testing.T) {
 	page, err := driver.NewPage(agouti.Browser("chrome"))
 	gm.Expect(err).NotTo(gm.HaveOccurred())
 
-	for i := 40; i <41 ; i++ {
+	for i := 39; i <40 ; i++ {
 		
 		navigstr := "http://stackoverflow.com/jobs?sort=p&pg="+strconv.Itoa(i)
 		gm.Expect(page.Navigate(navigstr)).To(gm.Succeed())

@@ -1,8 +1,8 @@
 package apply_for_job
 
 import (
-	"apply_for_job/handle_internal_link"
-	"dbhandler"
+	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link"
+	"github.com/remotejob/gojobextractor/dbhandler"
 	"fmt"
 	gm "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"

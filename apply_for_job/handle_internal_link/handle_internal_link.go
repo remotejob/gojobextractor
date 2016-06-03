@@ -156,9 +156,9 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	//	gm.Expect(allinputs.At(idtoinput).Click()).To(gm.Succeed())
 	gm.Expect(allinputs.At(idtoinput).UploadFile("/home/juno/git/cv/version_desk_react_00/dist/mazurov_cv.pdf")).To(gm.Succeed())
 
-	mytagstoinsert := mytags.GetMyTags("/home/juno/git/jobprotractor/gojobextractor/mytags.csv", jo.Tags)
+	mytagstoinsert := mytags.GetMyTags("/home/juno/neonworkspace/gojobextractor/mytags.csv", jo.Tags)
 //	fmt.Println(mytagstoinsert)
-	coverlettertxt := coverletter.Create(mytagstoinsert, "/home/juno/git/jobprotractor/gojobextractor/coverletter.csv")
+	coverlettertxt := coverletter.Create(mytagstoinsert, "/home/juno/neonworkspace/gojobextractor/coverletter.csv")
 
 	gm.Expect(form.FindByID("CoverLetter")).Should(am.BeFound())
 	coverletter := form.FindByID("CoverLetter")

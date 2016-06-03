@@ -4,7 +4,7 @@ import (
 	gm "github.com/onsi/gomega"
 	"gopkg.in/mgo.v2"
 	"testing"
-	"dbhandler"
+	"github.com/remotejob/gojobextractor/dbhandler"
 	"fmt"
 )
 
