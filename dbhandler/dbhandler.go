@@ -1,7 +1,7 @@
 package dbhandler
 
 import (
-	"domains"
+	"github.com/remotejob/gojobextractor/domains"
 	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"

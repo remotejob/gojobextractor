@@ -1,7 +1,7 @@
 package jobdetails
 
 import (
-	"domains"
+	"github.com/remotejob/gojobextractor/domains"
 	//	"fmt"
 	gm "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
@@ -9,7 +9,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"strings"
 	"time"
-	"dbhandler"
+	"github.com/remotejob/gojobextractor/dbhandler"
 )
 
 type JobOffer struct {

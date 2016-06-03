@@ -1,0 +1,26 @@
+<html>
+<head>
+<title>Chat</title>
+</head>
+<body>
+
+{{range .}}
+<table border="1" width="100%">
+<tr>
+<td>{{.Id}}</br>
+{{.Externallink}}</br>
+{{.Location}}
+</td>
+<td>
+<form action="/update" method="post">
+	<input type="hidden" name="Id" value={{.Id}}>
+    <input type="submit" value="Submit">
+</form>
+
+</td>
+</tr>
+
+{{end}}
+</table>
+</body>
+</html>
