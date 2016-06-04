@@ -20,11 +20,6 @@ func SendAll(dbsession mgo.Session, emails []domains.Email, login string, pass s
 		time.Sleep(3000 * time.Millisecond)
 	}
 
-//		for i := 0; i < 1; i++ {
-//		
-//			send(dbsession,login, pass, emails[i])
-//			time.Sleep(3000 * time.Millisecond)
-//		}
 
 }
 func send(dbsession mgo.Session, glogin string, gpass string, emailtxt domains.Email) {

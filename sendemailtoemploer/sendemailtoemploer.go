@@ -2,11 +2,15 @@ package main
 
 import (
 	"github.com/remotejob/gojobextractor/domains"
+	"github.com/remotejob/gojobextractor/sendemailtoemploer/create_emails"
+	"github.com/remotejob/gojobextractor/sendemailtoemploer/find_emploers_for_email"
+	"github.com/remotejob/gojobextractor/sendemailtoemploer/send_emails"
 	//	"flag"
 	//	"fmt"
 	"gopkg.in/gcfg.v1"
+	"gopkg.in/mgo.v2"	
 	"log"
-//	"net/smtp"
+	//	"net/smtp"
 	//	"os"
 	//    "strconv"
 )
@@ -30,30 +34,21 @@ func init() {
 }
 
 func main() {
+	dbsession, err := mgo.Dial("127.0.0.1")
+	if err != nil {
+		panic(err)
+	}
+	defer dbsession.Close()
 
-//	send("hello there")
+	results := find_emploers_for_email.FindEmpl(*dbsession)
+
+	emailstosend := create_emails.Create(results)
+	if len(emailstosend) > 0 {
+		send_emails.SendAll(*dbsession, emailstosend, glogin, gpass)
+	}
+
+	//	send("hello there")
 
 }
-//func send(body string) {
-//	from := glogin
-//	pass := gpass
-//	to := "aleksander.mazurov@gmail.com"
-//
-//	myfrom := "support@mazurov.eu"
-//
-//	msg := "From: " + myfrom + "\n" +
-//		"To: " + to + "\n" +
-//		"Subject: Hello there\n\n" +
-//		body
-//
-//	err := smtp.SendMail("smtp.gmail.com:587",
-//		smtp.PlainAuth("", from, pass, "smtp.gmail.com"),
-//		from, []string{to}, []byte(msg))
-//
-//	if err != nil {
-//		log.Printf("smtp error: %s", err)
-//		return
-//	}
-//
-//	log.Print("sent, visit http://foobarbazz.mailinator.com")
-//}
+
+
