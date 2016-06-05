@@ -61,9 +61,7 @@ func (jo *JobOffer) ParsePage(urlstr string) {
 	matcher := func(n *html.Node) bool {
 		// must check for nil values
 		if n.DataAtom == atom.A {
-			//			fmt.Println(scrape.Attr(n, "class"))
-			//						return scrape.Attr(n, "class") == "employer"
-			//			return strings.HasPrefix(scrape.Attr(n, "class"), "-item -job")
+
 			return true
 
 		}
@@ -80,8 +78,6 @@ func (jo *JobOffer) ParsePage(urlstr string) {
 		now := time.Now()
 
 		for _, link := range gridItems {
-
-//			fmt.Println(link)
 
 			id := scrape.Attr(link, "id")
 			data_uri := scrape.Attr(link, "data-uri")

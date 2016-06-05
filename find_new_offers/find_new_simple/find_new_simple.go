@@ -27,22 +27,18 @@ func main() {
 	}
 	defer dbsession.Close()
 
-	for i := 39; i < 40; i++ {
+	for i := 4; i < 5; i++ {
 
 		navigstr := "http://stackoverflow.com/jobs?sort=p&pg=" + strconv.Itoa(i)
 		links := findalllinks.FindAll(navigstr)
 
 		for _, link := range links {
 
-			fmt.Println(link)
-
 			newJobentry := jobdetails_simple.NewJobOffers()
 			(*newJobentry).ParsePage(link)
 			(*newJobentry).ExamDbRecord(*dbsession)
 
 		}
-
-		//		newJobentry :=jobdetails_simple.NewJobOffers()
 
 	}
 

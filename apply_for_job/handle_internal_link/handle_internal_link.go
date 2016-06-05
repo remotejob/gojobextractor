@@ -92,8 +92,7 @@ func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 	}
 
 	if idtoapply > 0 {
-//		fmt.Println("idtoapply",idtoapply)
-//		fmt.Println(alllinks.At(idtoapply).Text())
+
 		jo.ElaborateFrame(dbsession, page, alllinks.At(idtoapply))
 
 	} else {
@@ -150,10 +149,7 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 
 	}
 	//
-	fmt.Println("idtoinput", idtoinput)
-	fmt.Println("idbuttonsubmit", idbuttonsubmit)
-	//
-	//	gm.Expect(allinputs.At(idtoinput).Click()).To(gm.Succeed())
+
 	gm.Expect(allinputs.At(idtoinput).UploadFile("/home/juno/git/cv/version_desk_react_00/dist/mazurov_cv.pdf")).To(gm.Succeed())
 
 	mytagstoinsert := mytags.GetMyTags("/home/juno/neonworkspace/gojobextractor/mytags.csv", jo.Tags)

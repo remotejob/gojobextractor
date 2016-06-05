@@ -10,6 +10,7 @@ import (
 	"gopkg.in/mgo.v2"
 	"os"
 	"testing"
+	"time"
 )
 
 var dbsession *mgo.Session
@@ -28,7 +29,6 @@ func TestApply(t *testing.T) {
 
 		email := os.Getenv("login")
 		pass := os.Getenv("pass")
-		fmt.Println(email, pass)
 		driver := agouti.ChromeDriver()
 		gm.Expect(driver.Start()).To(gm.Succeed())
 		page, err := driver.NewPage(agouti.Browser("chrome"))
@@ -49,13 +49,13 @@ func TestApply(t *testing.T) {
 
 			gm.Expect(page.Navigate(results[i].Id)).To(gm.Succeed())
 			gm.Expect(page).To(am.HaveURL(results[i].Id))
-
 			employer := handle_internal_link.NewInternalJobOffers(results[i])
 
 			(*employer).Apply(*dbsession, page)
 
 		}
-//		gm.Expect(driver.Stop()).To(gm.Succeed())
+		time.Sleep(1000 * time.Millisecond)		
+		gm.Expect(driver.Stop()).To(gm.Succeed())
 	}
 
 }

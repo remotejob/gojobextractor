@@ -30,8 +30,6 @@ func UpdateExtEmploerEmail(dbsession mgo.Session, email domains.Email) {
 		log.Fatal(err)
 	}
 
-//	fmt.Println("update->", joboffer)
-
 }
 
 func ExternalEmploers(dbsession mgo.Session) []domains.JobOffer {
@@ -86,7 +84,7 @@ func InsertRecord(dbsession mgo.Session, joboffer domains.JobOffer) {
 			log.Fatal(err)
 		}
 	} else {
-		fmt.Println("EXIST", count, joboffer)
+		fmt.Println("EXIST", count,joboffer.Id)
 
 	}
 
