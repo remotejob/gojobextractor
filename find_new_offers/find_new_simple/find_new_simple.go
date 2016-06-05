@@ -27,7 +27,7 @@ func main() {
 	}
 	defer dbsession.Close()
 
-	for i := 4; i < 5; i++ {
+	for i := 5; i < 6; i++ {
 
 		navigstr := "http://stackoverflow.com/jobs?sort=p&pg=" + strconv.Itoa(i)
 		links := findalllinks.FindAll(navigstr)
