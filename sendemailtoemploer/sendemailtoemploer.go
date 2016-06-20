@@ -5,36 +5,53 @@ import (
 	"github.com/remotejob/gojobextractor/sendemailtoemploer/create_emails"
 	"github.com/remotejob/gojobextractor/sendemailtoemploer/find_emploers_for_email"
 	"github.com/remotejob/gojobextractor/sendemailtoemploer/send_emails"
-	//	"flag"
-	//	"fmt"
 	"gopkg.in/gcfg.v1"
-	"gopkg.in/mgo.v2"	
+	"gopkg.in/mgo.v2"
 	"log"
-	//	"net/smtp"
-	//	"os"
-	//    "strconv"
+	"time"
 )
 
-var glogin = ""
-var gpass = ""
+var glogin string
+var gpass string
+var addrs []string
+var database string
+var username string
+var password string
+var mechanism string
 
 func init() {
 
 	var cfg domains.ServerConfig
-	if err := gcfg.ReadFileInto(&cfg, "/home/juno/neonworkspace/gojobextractor/config.gcfg"); err != nil {
+	if err := gcfg.ReadFileInto(&cfg, "config.gcfg"); err != nil {
 		log.Fatalln(err.Error())
 
 	} else {
 
 		glogin = cfg.Login.Glogin
 		gpass = cfg.Pass.Gpass
+		addrs = cfg.Dbmgo.Addrs
+		database = cfg.Dbmgo.Database
+		username = cfg.Dbmgo.Username
+		password = cfg.Dbmgo.Password
+		mechanism = cfg.Dbmgo.Mechanism
 
 	}
 
 }
 
 func main() {
-	dbsession, err := mgo.Dial("127.0.0.1")
+	
+		mongoDBDialInfo := &mgo.DialInfo{
+		Addrs:     addrs,
+		Timeout:   60 * time.Second,
+		Database:  database,
+		Username:  username,
+		Password:  password,
+		Mechanism: mechanism,
+	}
+
+	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)	
+
 	if err != nil {
 		panic(err)
 	}
@@ -47,8 +64,5 @@ func main() {
 		send_emails.SendAll(*dbsession, emailstosend, glogin, gpass)
 	}
 
-	//	send("hello there")
 
 }
-
-

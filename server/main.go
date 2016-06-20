@@ -2,12 +2,15 @@ package main
 
 import (
 	"github.com/remotejob/gojobextractor/dbhandler"
+	"github.com/remotejob/gojobextractor/domains"
+	"gopkg.in/gcfg.v1"
 	"gopkg.in/mgo.v2"
 	"log"
 	"net/http"
 	"path/filepath"
 	"sync"
 	"text/template"
+	"time"
 )
 
 type templateHandler struct {
@@ -18,11 +21,48 @@ type templateHandler struct {
 
 type updateHandler struct{}
 
+var addrs []string
+var database string
+var username string
+var password string
+var mechanism string
+
+//var mongoDBDialInfo mgo.DialInfo
+
+//var dbsession mgo.Session
+
+func init() {
+
+	var cfg domains.ServerConfig
+	if err := gcfg.ReadFileInto(&cfg, "config.gcfg"); err != nil {
+		log.Fatalln(err.Error())
+
+	} else {
+
+		addrs = cfg.Dbmgo.Addrs
+		database = cfg.Dbmgo.Database
+		username = cfg.Dbmgo.Username
+		password = cfg.Dbmgo.Password
+		mechanism = cfg.Dbmgo.Mechanism
+
+	}
+
+
+}
+
 func (t *updateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "POST" {
 
-		dbsession, err := mgo.Dial("127.0.0.1")
+		mongoDBDialInfo := &mgo.DialInfo{
+			Addrs:     addrs,
+			Timeout:   60 * time.Second,
+			Database:  database,
+			Username:  username,
+			Password:  password,
+			Mechanism: mechanism,
+		}
+		dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
 		if err != nil {
 			panic(err)
 		}
@@ -47,7 +87,15 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		t.templ = template.Must(template.ParseFiles(filepath.Join("templates", t.filename)))
 	})
 
-	dbsession, err := mgo.Dial("127.0.0.1")
+	mongoDBDialInfo := &mgo.DialInfo{
+		Addrs:     addrs,
+		Timeout:   60 * time.Second,
+		Database:  database,
+		Username:  username,
+		Password:  password,
+		Mechanism: mechanism,
+	}
+	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		panic(err)
 	}

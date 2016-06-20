@@ -28,7 +28,6 @@ func FindEmpl(dbsession mgo.Session) []domains.JobOffer {
 
 			cleanemail =cleanemail[0:len(cleanemail)-1]
 			result.Email=cleanemail
-//			result.Email="aleksander.mazurov@gmail.com"
 			
 			to_email_emploers = append(to_email_emploers, result)
 

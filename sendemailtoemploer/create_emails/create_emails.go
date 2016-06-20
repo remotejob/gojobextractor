@@ -12,7 +12,7 @@ func Create(emplayers []domains.JobOffer) []domains.Email {
 
 	var emailstosend []domains.Email
 
-	csvfile, err := os.Open("/home/juno/git/jobprotractor/gojobextractor/coverletter.csv")
+	csvfile, err := os.Open("coverletter.csv")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -23,7 +23,7 @@ func Create(emplayers []domains.JobOffer) []domains.Email {
 
 	for _, joboffer := range emplayers {
 
-		mytagstoinsert := mytags.GetMyTags("/home/juno/git/jobprotractor/gojobextractor/mytags.csv", joboffer.Tags)
+		mytagstoinsert := mytags.GetMyTags("mytags.csv", joboffer.Tags)
 
 		body := "My experience:\n\n"
 

@@ -1,41 +1,60 @@
 package main
 
 import (
-	"github.com/remotejob/gojobextractor/dbhandler"
 	"encoding/csv"
-	"flag"
+	"github.com/remotejob/gojobextractor/dbhandler"
+	"github.com/remotejob/gojobextractor/domains"
+	//	"flag"
 	"fmt"
+	"gopkg.in/gcfg.v1"
 	"gopkg.in/mgo.v2"
+	"log"
 	"os"
 	"sort"
+	"time"
 )
 
-const APP_VERSION = "0.1"
+var addrs []string
+var database string
+var username string
+var password string
+var mechanism string
 
-// The flag package provides a default help printer via -h switch
-var versionFlag *bool = flag.Bool("v", false, "Print the version number.")
+func init() {
+
+	var cfg domains.ServerConfig
+	if err := gcfg.ReadFileInto(&cfg, "config.gcfg"); err != nil {
+		log.Fatalln(err.Error())
+
+	} else {
+
+		addrs = cfg.Dbmgo.Addrs
+		database = cfg.Dbmgo.Database
+		username = cfg.Dbmgo.Username
+		password = cfg.Dbmgo.Password
+		mechanism = cfg.Dbmgo.Mechanism
+	}
+
+}
 
 func main() {
-	flag.Parse() // Scan the arguments list
 
-	if *versionFlag {
-		fmt.Println("Version:", APP_VERSION)
+	mongoDBDialInfo := &mgo.DialInfo{
+		Addrs:     addrs,
+		Timeout:   60 * time.Second,
+		Database:  database,
+		Username:  username,
+		Password:  password,
+		Mechanism: mechanism,
 	}
-	dbsession, err := mgo.Dial("127.0.0.1")
+
+	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		panic(err)
 	}
 	defer dbsession.Close()
 
-	//	csvfile, err := os.Open("/home/juno/git/jobprotractor/gojobextractor/mytags.csv")
-	//	if err != nil {
-	//		fmt.Println(err)
-	//	}
-	//	reader := csv.NewReader(csvfile)
-	//	reader.LazyQuotes = true
-	//
-	//	records, err := reader.ReadAll()
-	records := FromCSV("/home/juno/neonworkspace/gojobextractor/mytags.csv")
+	records := FromCSV("mytags.csv")
 
 	mytags := make(map[string]struct{})
 
@@ -45,7 +64,7 @@ func main() {
 
 	}
 
-	notmytagrecords := FromCSV("/home/juno/neonworkspace/gojobextractor/notmytags.csv")
+	notmytagrecords := FromCSV("notmytags.csv")
 
 	notmytags := make(map[string]struct{})
 
@@ -88,13 +107,13 @@ func main() {
 	sort.Strings(newtags)
 
 	for _, newtag := range newtags {
-//		fmt.Println(newtag)
+		//		fmt.Println(newtag)
 
 		_, ok := notmytags[newtag]
 
 		if !ok {
 
-			fmt.Println(newtag)	
+			fmt.Println(newtag)
 			//			newtags = append(newtags, k)
 
 		}

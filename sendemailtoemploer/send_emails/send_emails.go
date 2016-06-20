@@ -37,7 +37,7 @@ func send(dbsession mgo.Session, glogin string, gpass string, emailtxt domains.E
 	m.To = []string{emailtxt.To}
 //	m.Subject = "ref: " + emailtxt.Subject
 
-	err := m.Attach("/home/juno/git/cv/version_desk_react_00/dist/mazurov_cv.pdf")
+	err := m.Attach("mazurov_cv.pdf")
 	if err != nil {
 		log.Println(err)
 	}
@@ -46,29 +46,7 @@ func send(dbsession mgo.Session, glogin string, gpass string, emailtxt domains.E
 	if err != nil {
 		log.Println(err)
 	}
-
-	//	fmt.Println("TO:",email)
-	//
-	////	to := "aleksander.mazurov@gmail.com"
-	//	to :=email.To
-	//
-	//	myfrom := "support@mazurov.eu"
-	//
-	//	msg := "From: " + myfrom + "\n" +
-	//		"To: " + to + "\n" +
-	//		"Subject:ref: " + email.Subject + "\n\n" +
-	//		email.Body
-	//
-	//	err := smtp.SendMail("smtp.gmail.com:587",
-	//		smtp.PlainAuth("", from, pass, "smtp.gmail.com"),
-	//		from, []string{to}, []byte(msg))
-	//
-	//	if err != nil {
-	//		log.Printf("smtp error: %s", err)
-	//		return
-	//	}
-
-	//	log.Print("sent, visit http://foobarbazz.mailinator.com")
+	
 	dbhandler.UpdateExtEmploerEmail(dbsession, emailtxt)
 
 }

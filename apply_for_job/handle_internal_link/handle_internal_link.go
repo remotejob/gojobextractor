@@ -1,14 +1,15 @@
 package handle_internal_link
 
 import (
+	"fmt"
+	gm "github.com/onsi/gomega"
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/coverletter"
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/mytags"
 	"github.com/remotejob/gojobextractor/dbhandler"
 	"github.com/remotejob/gojobextractor/domains"
-	"fmt"
-	gm "github.com/onsi/gomega"
 	"github.com/sclevine/agouti"
 	am "github.com/sclevine/agouti/matchers"
+	"github.com/tebeka/selenium"
 	"gopkg.in/mgo.v2"
 	"strings"
 	"time"
@@ -48,6 +49,62 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 
 }
 
+func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.WebDriver, link string) {
+
+	page.Get(link)
+	time.Sleep(time.Millisecond * 4000)
+	jobdetails, err := page.FindElement(selenium.ByClassName, "jobdetail")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	time.Sleep(time.Millisecond * 4000)
+	//	fmt.Println(jobdetails)
+	alllinks, err := jobdetails.FindElements(selenium.ByTagName, "a")
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+	count_links := len(alllinks)
+
+	fmt.Println("count_links", count_links)
+	var idtoapply int
+	idtoapply = 0
+
+	for i := 0; i < count_links; i++ {
+
+		if data_jobid, err := alllinks[i].GetAttribute("data-jobid"); err == nil {
+			//			fmt.Println(data_jobid)
+			text, _ := alllinks[i].Text()
+			id, _ := alllinks[i].GetAttribute("id")
+
+			if text == "apply now" && id == "apply" {
+				idtoapply = i
+				fmt.Println("apply id", idtoapply, data_jobid)
+			}
+
+		}
+
+		if href, err := alllinks[i].GetAttribute("href"); err == nil {
+			if strings.HasPrefix(href, "mailto:") {
+
+				emailtxt, _ := alllinks[i].Text()
+				jo.Email = emailtxt
+			}
+
+		}
+
+	}
+	if idtoapply > 0 {
+
+		jo.ElaborateFrame_headless(dbsession, page, alllinks[idtoapply])
+
+	} else {
+
+		fmt.Println("Can't find apply link id->", idtoapply)
+
+	}
+
+}
+
 func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 
 	gm.Expect(page.FindByClass("jobdetail")).Should(am.BeFound())
@@ -72,7 +129,6 @@ func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 
 			if text == "apply now" && id == "apply" {
 
-//				fmt.Println("to click", text, id)
 				idtoapply = i
 
 			}
@@ -103,6 +159,54 @@ func (jo *InternalJobOffer) Apply(dbsession mgo.Session, page *agouti.Page) {
 
 }
 
+func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page selenium.WebDriver, link selenium.WebElement) {
+
+	link.Click()
+	time.Sleep(4000 * time.Millisecond)
+	if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
+
+		if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
+
+			fmt.Println("allinputs", len(allinputs))
+
+			for _, input := range allinputs {
+
+				if type_atr, err := input.GetAttribute("type"); err == nil {
+					if type_atr == "file" {
+						input.SendKeys("mazurov_cv.pdf")
+						time.Sleep(3000 * time.Millisecond)
+
+					}
+
+				}
+
+			}
+
+		}
+
+		mytagstoinsert := mytags.GetMyTags("mytags.csv", jo.Tags)
+		coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter.csv")
+
+		if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
+
+			coverletter.SendKeys(coverlettertxt)
+			time.Sleep(1000 * time.Millisecond)
+
+			if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
+				submitbtm.Submit()
+
+				jo.Applied = true
+				jo.UpdateApplyedEmployer(dbsession)
+
+			}
+			time.Sleep(1000 * time.Millisecond)
+
+		}
+
+	}
+
+}
+
 func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.Page, link *agouti.Selection) {
 
 	gm.Expect(link.Click()).To(gm.Succeed())
@@ -110,13 +214,12 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	gm.Expect(page.FindByID("apply-dialog")).Should(am.BeFound())
 	form := page.FindByID("apply-dialog")
 
-// stop hear
 	time.Sleep(1000 * time.Millisecond)
-	
+
 	apply_form := form.FindByClass("apply-form")
-	
-	fmt.Println("apply_form!!->",apply_form)
-	
+
+	fmt.Println("apply_form!!->", apply_form)
+
 	gm.Expect(form.FindByClass("apply-form")).Should(am.BeFound())
 	time.Sleep(1000 * time.Millisecond)
 
@@ -150,11 +253,11 @@ func (jo *InternalJobOffer) ElaborateFrame(dbsession mgo.Session, page *agouti.P
 	}
 	//
 
-	gm.Expect(allinputs.At(idtoinput).UploadFile("/home/juno/git/cv/version_desk_react_00/dist/mazurov_cv.pdf")).To(gm.Succeed())
+	gm.Expect(allinputs.At(idtoinput).UploadFile("mazurov_cv.pdf")).To(gm.Succeed())
 
-	mytagstoinsert := mytags.GetMyTags("/home/juno/neonworkspace/gojobextractor/mytags.csv", jo.Tags)
-//	fmt.Println(mytagstoinsert)
-	coverlettertxt := coverletter.Create(mytagstoinsert, "/home/juno/neonworkspace/gojobextractor/coverletter.csv")
+	mytagstoinsert := mytags.GetMyTags("mytags.csv", jo.Tags)
+	//	fmt.Println(mytagstoinsert)
+	coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter.csv")
 
 	gm.Expect(form.FindByID("CoverLetter")).Should(am.BeFound())
 	coverletter := form.FindByID("CoverLetter")

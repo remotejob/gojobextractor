@@ -75,7 +75,6 @@ func InsertRecord(dbsession mgo.Session, joboffer domains.JobOffer) {
 
 		log.Fatal(err)
 	}
-	//	fmt.Println("count", count)
 
 	if count == 0 {
 
