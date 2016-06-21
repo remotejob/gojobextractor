@@ -19,6 +19,7 @@ var database string
 var username string
 var password string
 var mechanism string
+var cvpdf string
 
 func init() {
 
@@ -35,6 +36,7 @@ func init() {
 		username = cfg.Dbmgo.Username
 		password = cfg.Dbmgo.Password
 		mechanism = cfg.Dbmgo.Mechanism
+		cvpdf = cfg.Cvpdf.File		
 
 	}
 
@@ -52,7 +54,7 @@ func main() {
 	}
 
 	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
-	//	dbsession, err := mgo.Dial("127.0.0.1")
+	
 	if err != nil {
 		panic(err)
 	}
@@ -60,7 +62,7 @@ func main() {
 
 	results := dbhandler.FindNotApplyedEmployers(*dbsession)
 
-	fmt.Println("impouers to apply", len(results))
+	fmt.Println("imlouers to apply", len(results))
 
 	if len(results) > 0 {
 
@@ -104,7 +106,7 @@ func main() {
 			fmt.Println(results[i].Id)
 
 			employer := handle_internal_link.NewInternalJobOffers(results[i])
-			(*employer).Apply_headless(*dbsession, wd, results[i].Id)
+			(*employer).Apply_headless(*dbsession, wd, results[i].Id,cvpdf)
 
 		}
 

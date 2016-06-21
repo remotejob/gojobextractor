@@ -30,10 +30,15 @@ type ServerConfig struct {
 		
 	}
 	
-	Pages struct {
-		
+	Pages struct {		
 		Startpage int
 		Stoppage int
+		
+	}
+	
+	Cvpdf struct {
+		
+		File string
 		
 	}
 }

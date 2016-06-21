@@ -17,7 +17,7 @@ func SendAll(dbsession mgo.Session, emails []domains.Email, login string, pass s
 	for _, email := range emails {
 
 		send(dbsession, login, pass, email)
-		time.Sleep(3000 * time.Millisecond)
+		time.Sleep(4000 * time.Millisecond)
 	}
 
 

@@ -23,6 +23,7 @@ func Create(emplayers []domains.JobOffer) []domains.Email {
 
 	for _, joboffer := range emplayers {
 
+		fmt.Println("Send to:",joboffer.Id,joboffer.Externallink,joboffer.Email)
 		mytagstoinsert := mytags.GetMyTags("mytags.csv", joboffer.Tags)
 
 		body := "My experience:\n\n"
