@@ -36,7 +36,7 @@ func init() {
 		username = cfg.Dbmgo.Username
 		password = cfg.Dbmgo.Password
 		mechanism = cfg.Dbmgo.Mechanism
-		cvpdf = cfg.Cvpdf.File		
+		cvpdf = cfg.Cvpdf.File
 
 	}
 
@@ -54,7 +54,7 @@ func main() {
 	}
 
 	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
-	
+
 	if err != nil {
 		panic(err)
 	}
@@ -68,7 +68,10 @@ func main() {
 
 		caps := selenium.Capabilities{"browserName": "chrome"}
 		//				caps := selenium.Capabilities{"browserName": "phantomjs"}
-		wd, _ := selenium.NewRemote(caps, "")
+		wd, err := selenium.NewRemote(caps, "")
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 		defer wd.Quit()
 
 		wd.Get("https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fjobs")
@@ -106,7 +109,7 @@ func main() {
 			fmt.Println(results[i].Id)
 
 			employer := handle_internal_link.NewInternalJobOffers(results[i])
-			(*employer).Apply_headless(*dbsession, wd, results[i].Id,cvpdf)
+			(*employer).Apply_headless(*dbsession, wd, results[i].Id, cvpdf)
 
 		}
 
