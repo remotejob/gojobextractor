@@ -1,16 +1,17 @@
 package jobdetails_simple
 
 import (
-//	"fmt"
+	//	"fmt"
+	"github.com/remotejob/gojobextractor/dbhandler"
+	"github.com/remotejob/gojobextractor/domains"
 	"github.com/yhat/scrape"
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
+	"gopkg.in/mgo.v2"
 	"net/http"
+	"net/url"
 	"strings"
 	"time"
-	"gopkg.in/mgo.v2"
-	"github.com/remotejob/gojobextractor/domains"
-	"github.com/remotejob/gojobextractor/dbhandler"		
 )
 
 type JobOffer struct {
@@ -70,7 +71,7 @@ func (jo *JobOffer) ParsePage(urlstr string) {
 
 	jo.FindLocation(root)
 	jo.FindDescription(root)
-	
+
 	grid, ok := scrape.Find(root, scrape.ByClass("jobdetail"))
 
 	if ok {
@@ -90,7 +91,16 @@ func (jo *JobOffer) ParsePage(urlstr string) {
 
 			if class == "title job-link" {
 
-				jo.Id = href
+				//				jo.Id = href
+
+				u, err := url.Parse(urlstr)
+				if err != nil {
+					panic(err)
+				}
+
+				id_from_link := u.Scheme +"://"+ u.Host + u.Path
+
+				jo.Id = id_from_link
 				jo.Created_at = now
 
 				if text != "" {
@@ -156,8 +166,8 @@ func (jo *JobOffer) FindDescription(node *html.Node) {
 	if ok {
 
 		description := scrape.Text(des)
-		if description  != "" {
-			jo.Description = strings.Replace(description,"Job Description","",1)
+		if description != "" {
+			jo.Description = strings.Replace(description, "Job Description", "", 1)
 		}
 	}
 

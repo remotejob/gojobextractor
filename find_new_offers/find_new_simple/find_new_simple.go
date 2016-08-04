@@ -65,8 +65,9 @@ func main() {
 
 		for _, link := range links {
 			
+			fulllink := "http://stackoverflow.com" +link
 			newJobentry := jobdetails_simple.NewJobOffers()
-			(*newJobentry).ParsePage(link)
+			(*newJobentry).ParsePage(fulllink)
 			(*newJobentry).ExamDbRecord(*dbsession)
 
 		}

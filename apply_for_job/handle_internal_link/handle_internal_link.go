@@ -50,6 +50,7 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 
 func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.WebDriver, link string, cvpdf string) {
 
+
 	page.Get(link)
 	time.Sleep(time.Millisecond * 3000)
 	jobdetails, err := page.FindElement(selenium.ByClassName, "jobdetail")
@@ -166,7 +167,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 				fmt.Println("allinputs", len(allinputs))
 
-				if len(allinputs) == 9 {
+				if len(allinputs) == 10 {
 					for _, input := range allinputs {
 
 						if type_atr, err := input.GetAttribute("type"); err == nil {
@@ -201,7 +202,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 				} else {
 
-					fmt.Println("!!!Input num not ==9")
+					fmt.Println("!!!Input num not ==10")
 
 				}
 

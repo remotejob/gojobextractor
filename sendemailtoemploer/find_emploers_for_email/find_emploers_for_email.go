@@ -3,7 +3,7 @@ package find_emploers_for_email
 import (
 	"github.com/remotejob/gojobextractor/dbhandler"
 	"github.com/remotejob/gojobextractor/domains"
-//	"fmt"
+	"fmt"
 	"gopkg.in/mgo.v2"
 	"net/url"
 	"strings"
@@ -24,15 +24,16 @@ func FindEmpl(dbsession mgo.Session) []domains.JobOffer {
 				panic(err)
 			}
 			
-			cleanemail := strings.TrimLeft(strings.TrimRight(result.Externallink,u.RawQuery),"mailto:")
+			cleanemail := strings.TrimLeft(strings.TrimRight(result.Externallink,u.RawQuery),"mailto")
 
-			cleanemail =cleanemail[0:len(cleanemail)-1]
+			cleanemail =cleanemail[1:len(cleanemail)-1]
 			result.Email=cleanemail
 			
 			to_email_emploers = append(to_email_emploers, result)
 
 		} else if result.Email != "" && !strings.HasPrefix(result.Externallink, "mailto:") {
 
+			fmt.Print("get from mail record:",result.Email)
 			to_email_emploers = append(to_email_emploers, result)
 
 		}

@@ -106,7 +106,7 @@ func main() {
 		for i := 0; i < len(results); i++ {
 			//		for i := 0; i < 3; i++ {
 
-			fmt.Println(results[i].Id)
+			fmt.Println("id",results[i].Id)
 
 			employer := handle_internal_link.NewInternalJobOffers(results[i])
 			(*employer).Apply_headless(*dbsession, wd, results[i].Id, cvpdf)
