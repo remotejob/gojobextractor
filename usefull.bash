@@ -1,3 +1,7 @@
+GOBIN=$PWD/bin go install
+
+
+
 stop mongodb
 
 mongodump --dbpath  /var/lib/mongodb

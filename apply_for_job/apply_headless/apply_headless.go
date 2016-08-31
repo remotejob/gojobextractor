@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"time"
+
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link"
 	"github.com/remotejob/gojobextractor/dbhandler"
 	"github.com/remotejob/gojobextractor/domains"
 	"github.com/tebeka/selenium"
 	"gopkg.in/gcfg.v1"
 	"gopkg.in/mgo.v2"
-	"log"
-	"time"
 )
 
 var login string
@@ -106,7 +107,7 @@ func main() {
 		for i := 0; i < len(results); i++ {
 			//		for i := 0; i < 3; i++ {
 
-			fmt.Println("id",results[i].Id)
+			fmt.Println("id", results[i].Id)
 
 			employer := handle_internal_link.NewInternalJobOffers(results[i])
 			(*employer).Apply_headless(*dbsession, wd, results[i].Id, cvpdf)
