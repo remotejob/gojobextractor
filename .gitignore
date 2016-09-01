@@ -6,6 +6,7 @@
 # Folders
 _obj
 _test
+bin
 config.gcfg
 
 # Architecture specific extensions/prefixes

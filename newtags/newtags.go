@@ -2,16 +2,18 @@ package main
 
 import (
 	"encoding/csv"
+
 	"github.com/remotejob/gojobextractor/dbhandler"
 	"github.com/remotejob/gojobextractor/domains"
 	//	"flag"
 	"fmt"
-	"gopkg.in/gcfg.v1"
-	"gopkg.in/mgo.v2"
 	"log"
 	"os"
 	"sort"
 	"time"
+
+	"gopkg.in/gcfg.v1"
+	"gopkg.in/mgo.v2"
 )
 
 var addrs []string
@@ -107,14 +109,12 @@ func main() {
 	sort.Strings(newtags)
 
 	for _, newtag := range newtags {
-		//		fmt.Println(newtag)
 
 		_, ok := notmytags[newtag]
 
 		if !ok {
 
 			fmt.Println(newtag)
-			//			newtags = append(newtags, k)
 
 		}
 

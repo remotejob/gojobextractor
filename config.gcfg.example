@@ -1,16 +1,16 @@
 [login]
-glogin = "********"
-slogin = "********"
+glogin = "support@sinelga.com"
+slogin = support@remotejob.eu
 
 [pass]
-gpass ="*******"
-spass ="*****"
+gpass ="bancariobiz1Rel"
+spass ="remotejob1Rel"
 
 [dbmgo]
 addrs ="104.236.237.125"
 database ="admin"
 username ="admin"
-password ="*******"
+password ="admin1Rel"
 mechanism ="SCRAM-SHA-1"
 
 [pages]
@@ -18,6 +18,6 @@ startpage = 1
 stoppage = 2
 
 [Cvpdf]
-file ="/home/juno/neonworkspace/gojobextractor/mazurov_cv.pdf"
+file ="/home/juno/neonworkspace/gowork/src/github.com/remotejob/gojobextractor/mazurov_cv.pdf"
 
 

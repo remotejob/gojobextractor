@@ -1,6 +1,8 @@
+
+
 GOBIN=$PWD/bin go install
 
-
+GOBIN=$PWD/bin go install sendemailtoemploer/sendemailtoemploer.go 
 
 stop mongodb
 
