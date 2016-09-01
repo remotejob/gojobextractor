@@ -9,6 +9,7 @@ _test
 bin
 config.gcfg
 config.gcfg.example
+cant_apply.txt
 
 # Architecture specific extensions/prefixes
 *.[568vq]
