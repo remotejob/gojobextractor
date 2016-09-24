@@ -1,0 +1,28 @@
+Hello! I'am Alex Mazurov.
+
+I started use Linux from kernel 0.98 version and I still use it.
+So if you are need any kind support in programming and/or
+your business based on Linux it's right place.
+--------------
+In addition to your request I can be useful in:
+
+General programming(Golang-JAVA-C-RUBY-JavaScript),
+Telecommunication(Voip-SMS-Asterisk-CiscoIOS),
+Web Application(WebService-Reactjs-Angular 2-RubyOnRails),
+Databases(MongoDB-Redis-MySql-PostgreSQL),
+Clouds(AWS-DigitalOcean-ContainerEngine),
+Virtualization(LinuxKVM-Docker),
+Unit tests(Selenium-Protractor-Ginkgo),
+SEO(Organic Web Search Optimization).
+
+My Development IDE: Eclipse/"Visual Studio Code  <---> Git (GitHub).
+
+My speaking languages: English Italian Russian.
+
+I hope you find all necessary information on Sites:
+
+http://mazurov.eu
+https://github.com/sinelga
+https://github.com/remotejob
+
+Thanks.

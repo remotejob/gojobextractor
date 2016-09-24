@@ -2,16 +2,17 @@ package handle_internal_link
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
+	"time"
+
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/coverletter"
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/mytags"
 	"github.com/remotejob/gojobextractor/dbhandler"
 	"github.com/remotejob/gojobextractor/domains"
 	"github.com/tebeka/selenium"
 	"gopkg.in/mgo.v2"
-	"os"
-	"strconv"
-	"strings"
-	"time"
 )
 
 type InternalJobOffer struct {
@@ -49,7 +50,6 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 }
 
 func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.WebDriver, link string, cvpdf string) {
-
 
 	page.Get(link)
 	time.Sleep(time.Millisecond * 3000)
@@ -125,7 +125,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 	time.Sleep(1000 * time.Millisecond)
 
 	link.Click()
-	time.Sleep(3000 * time.Millisecond)
+	time.Sleep(4000 * time.Millisecond)
 
 	if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
 
@@ -150,16 +150,16 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 					fmt.Println("error clicking ", err.Error())
 					fmt.Println(link.Location())
 					if err := link.Click(); err != nil {
-						fmt.Println("SECOND error clicking!! ", err.Error())						
-						
-					}									
+						fmt.Println("SECOND error clicking!! ", err.Error())
+
+					}
 
 				} else {
 					fmt.Println("Click on link OK")
 
 				}
 
-				time.Sleep(2000 * time.Millisecond)
+				time.Sleep(1000 * time.Millisecond)
 
 			}
 
@@ -173,7 +173,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 						if type_atr, err := input.GetAttribute("type"); err == nil {
 							if type_atr == "file" {
 								input.SendKeys(cvpdf)
-								time.Sleep(3000 * time.Millisecond)
+								time.Sleep(2000 * time.Millisecond)
 
 							}
 
@@ -187,9 +187,30 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 					if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
 
 						coverletter.SendKeys(coverlettertxt)
-						time.Sleep(1000 * time.Millisecond)
+						time.Sleep(2000 * time.Millisecond)
 
 						if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
+
+							// // time.Sleep(35000 * time.Millisecond)
+							// var response int
+							// fmt.Println("This program will activate SkyNet worldwide, are you sure about this?")
+
+							// fmt.Scanf("%c", &response) //<--- here
+
+							fmt.Printf("Please enter an integer: ")
+
+							// Read in an integer
+							var i int
+							_, err := fmt.Scanln(&i)
+							if err != nil {
+								fmt.Printf("Error: %s", err.Error())
+
+								// If int read fails, read as string and forget
+								var discard string
+								fmt.Scanln(&discard)
+								return
+							}
+
 							submitbtm.Submit()
 
 							jo.Applied = true
