@@ -30,7 +30,6 @@ type InternalJobOffer struct {
 }
 
 func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
-	//func NewInternalJobOffers() *InternalJobOffer {
 
 	return &InternalJobOffer{
 
@@ -52,72 +51,94 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.WebDriver, link string, cvpdf string) {
 
 	page.Get(link)
-	time.Sleep(time.Millisecond * 3000)
+	time.Sleep(time.Millisecond * 2500)
 	jobdetails, err := page.FindElement(selenium.ByClassName, "jobdetail")
 	if err != nil {
+
 		fmt.Println(err.Error())
-	}
-	time.Sleep(time.Millisecond * 3000)
-	//	fmt.Println(jobdetails)
-	alllinks, err := jobdetails.FindElements(selenium.ByTagName, "a")
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	count_links := len(alllinks)
+		if strings.HasPrefix(err.Error(), "no such element") {
+			// if err.Error() == "no such element" {
 
-	fmt.Println("count_links", count_links)
-	var idtoapply int
-	idtoapply = 0
+			fmt.Println("Check for Page not found 1")
 
-	var applybtm []selenium.WebElement
+			_, err := page.FindElement(selenium.ByID, "jobs-not-found")
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
 
-	for i := 0; i < count_links; i++ {
-
-		if data_jobid, err := alllinks[i].GetAttribute("data-jobid"); err == nil {
-
-			text, _ := alllinks[i].Text()
-			id, _ := alllinks[i].GetAttribute("id")
-
-			if text == "apply now" && id == "apply" {
-				idtoapply = i
-				fmt.Println("apply id", idtoapply, data_jobid)
-
-				applybtm = append(applybtm, alllinks[i])
+				fmt.Println("It's Page not found!! make Applie True an contunue")
+				jo.Applied = true
+				jo.UpdateApplyedEmployer(dbsession)
 
 			}
 
 		}
-
-		if href, err := alllinks[i].GetAttribute("href"); err == nil {
-			if strings.HasPrefix(href, "mailto:") {
-
-				emailtxt, _ := alllinks[i].Text()
-				jo.Email = emailtxt
-			}
-
-		}
-
-	}
-	if idtoapply > 0 {
-		time.Sleep(time.Millisecond * 1000)
-		jo.ElaborateFrame_headless(dbsession, page, applybtm[0], cvpdf)
 
 	} else {
+		time.Sleep(time.Millisecond * 2500)
 
-		fmt.Println("Can't find apply link id->", link)
-
-		file, err := os.OpenFile("cant_apply.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+		alllinks, err := jobdetails.FindElements(selenium.ByTagName, "a")
 		if err != nil {
-			panic(err)
-		}
-		defer file.Close()
+			fmt.Println(err.Error())
+			fmt.Println("Check for Page not found 2")
 
-		if _, err = file.WriteString(link + "\n"); err != nil {
-			panic(err)
+		}
+		count_links := len(alllinks)
+
+		fmt.Println("count_links", count_links)
+		var idtoapply int
+		idtoapply = 0
+
+		var applybtm []selenium.WebElement
+
+		for i := 0; i < count_links; i++ {
+
+			if data_jobid, err := alllinks[i].GetAttribute("data-jobid"); err == nil {
+
+				text, _ := alllinks[i].Text()
+				id, _ := alllinks[i].GetAttribute("id")
+
+				if text == "apply now" && id == "apply" {
+					idtoapply = i
+					fmt.Println("apply id", idtoapply, data_jobid)
+
+					applybtm = append(applybtm, alllinks[i])
+
+				}
+
+			}
+
+			if href, err := alllinks[i].GetAttribute("href"); err == nil {
+				if strings.HasPrefix(href, "mailto:") {
+
+					emailtxt, _ := alllinks[i].Text()
+					jo.Email = emailtxt
+				}
+
+			}
+
+		}
+		if idtoapply > 0 {
+			time.Sleep(time.Millisecond * 1000)
+			jo.ElaborateFrame_headless(dbsession, page, applybtm[0], cvpdf)
+
+		} else {
+
+			fmt.Println("Can't find apply link id->", link)
+
+			file, err := os.OpenFile("cant_apply.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+			if err != nil {
+				panic(err)
+			}
+			defer file.Close()
+
+			if _, err = file.WriteString(link + "\n"); err != nil {
+				panic(err)
+			}
+
 		}
 
 	}
-
 }
 
 func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page selenium.WebDriver, link selenium.WebElement, cvpdf string) {
@@ -190,12 +211,6 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 						time.Sleep(2000 * time.Millisecond)
 
 						if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
-
-							// // time.Sleep(35000 * time.Millisecond)
-							// var response int
-							// fmt.Println("This program will activate SkyNet worldwide, are you sure about this?")
-
-							// fmt.Scanf("%c", &response) //<--- here
 
 							fmt.Printf("Please enter an integer: ")
 

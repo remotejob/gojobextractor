@@ -102,10 +102,9 @@ func main() {
 			fmt.Println(err.Error())
 		}
 		btm.Click()
-		time.Sleep(time.Millisecond * 5000)
+		time.Sleep(time.Millisecond * 4000)
 
 		for i := 0; i < len(results); i++ {
-			//		for i := 0; i < 3; i++ {
 
 			fmt.Println("id", results[i].Id)
 
