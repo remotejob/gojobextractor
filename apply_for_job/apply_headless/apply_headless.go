@@ -63,7 +63,7 @@ func main() {
 
 	results := dbhandler.FindNotApplyedEmployers(*dbsession)
 
-	fmt.Println("imlouers to apply", len(results))
+	fmt.Println("implouers to apply", len(results))
 
 	if len(results) > 0 {
 
@@ -77,7 +77,7 @@ func main() {
 
 		wd.Get("https://stackoverflow.com/users/login?ssrc=head&returnurl=http%3a%2f%2fstackoverflow.com%2fjobs")
 
-		time.Sleep(time.Millisecond * 2000)
+		time.Sleep(time.Millisecond * 1500)
 
 		elem, err := wd.FindElement(selenium.ByID, "email")
 		if err != nil {

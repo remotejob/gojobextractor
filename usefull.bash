@@ -8,7 +8,7 @@ scp 104.236.237.125:gojobextractor/notmytags.csv .
 GOBIN=$PWD/bin go install
 
 
- GOBIN=$PWD/bin go install apply_for_job/apply_headless/apply_headless.go
+GOBIN=$PWD/bin go install apply_for_job/apply_headless/apply_headless.go
 GOBIN=$PWD/bin go install sendemailtoemploer/sendemailtoemploer.go 
 
 stop mongodb
