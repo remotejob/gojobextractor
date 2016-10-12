@@ -67,7 +67,7 @@ func main() {
 
 	if len(results) > 0 {
 
-		caps := selenium.Capabilities{"browserName": "chrome"}
+		caps := selenium.Capabilities{"browserName": "firefox"}
 		//				caps := selenium.Capabilities{"browserName": "phantomjs"}
 		wd, err := selenium.NewRemote(caps, "")
 		if err != nil {
