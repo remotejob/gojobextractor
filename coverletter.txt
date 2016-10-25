@@ -15,7 +15,7 @@ Virtualization(LinuxKVM-Docker),
 Unit tests(Selenium-Protractor-Ginkgo),
 SEO(Organic Web Search Optimization).
 
-My Development IDE: Eclipse/"Visual Studio Code  <---> Git (GitHub).
+My Development IDE: Eclipse/"Visual Studio Code"  <---> Git (GitHub).
 
 My speaking languages: English Italian Russian.
 
@@ -24,6 +24,7 @@ I hope you find all necessary information on Sites:
 http://mazurov.eu
 https://github.com/sinelga
 https://github.com/remotejob
+https://gitlab.com/remotejob
 
 
 PS
