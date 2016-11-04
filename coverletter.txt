@@ -22,9 +22,10 @@ My speaking languages: English Italian Russian.
 I hope you find all necessary information on Sites:
 
 http://mazurov.eu
-https://github.com/sinelga
-https://github.com/remotejob
-https://gitlab.com/remotejob
+https://github.com/sinelga  ---> 83 projects
+https://github.com/remotejob ---> 45 projects
+https://gitlab.com/remotejob ---> 3 projects
+https://hub.docker.com/u/remotejob ---> 9 images
 
 
 PS
