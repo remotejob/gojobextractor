@@ -188,7 +188,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 				fmt.Println("allinputs", len(allinputs))
 
-				if len(allinputs) == 10 {
+				if len(allinputs) == 11 {
 					for _, input := range allinputs {
 
 						if type_atr, err := input.GetAttribute("type"); err == nil {
