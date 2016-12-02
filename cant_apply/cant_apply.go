@@ -10,8 +10,8 @@ import (
 	gcfg "gopkg.in/gcfg.v1"
 	mgo "gopkg.in/mgo.v2"
 
+	"github.com/remotejob/gojobextractor/dbhandler"
 	"github.com/remotejob/gojobextractor/domains"
-	"gitlab.com/remotejob/gojobextractor/dbhandler"
 )
 
 var addrs []string
