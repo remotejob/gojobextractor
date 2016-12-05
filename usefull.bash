@@ -12,6 +12,10 @@ GOBIN=$PWD/bin go install apply_for_job/apply_headless/apply_headless.go
 GOBIN=$PWD/bin go install sendemailtoemploer/sendemailtoemploer.go 
 GOBIN=$PWD/bin go install cant_apply/cant_apply.go 
 GOBIN=$PWD/bin go install find_new_offers/find_new_simple/find_new_simple.go
+GOBIN=$PWD/bin go install newtags/newtags.go
+
+
+
 stop mongodb
 
 mongodump --dbpath  /var/lib/mongodb
