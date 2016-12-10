@@ -6,7 +6,7 @@
 # Folders
 _obj
 _test
-config.gcfg
+config.*
 cant_apply.txt
 
 # Architecture specific extensions/prefixes
