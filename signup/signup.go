@@ -5,10 +5,11 @@ import (
 	"log"
 	"time"
 
+	"math/rand"
+
 	"github.com/remotejob/gojobextractor/domains"
 	"github.com/tebeka/selenium"
 	gcfg "gopkg.in/gcfg.v1"
-	"math/rand"
 )
 
 var login string
@@ -47,8 +48,10 @@ func init() {
 
 func main() {
 
-    randInt := rand.Perm(0,len(displayNames))
-    displayName := [randInt]displayNames
+	rand.Seed(time.Now().UnixNano())
+
+	randInt := rand.Perm(len(displayNames))
+	displayName := displayNames[randInt[0]]
 
 	caps := selenium.Capabilities{"browserName": "chrome"}
 	//				caps := selenium.Capabilities{"browserName": "phantomjs"}
