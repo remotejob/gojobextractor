@@ -50,7 +50,9 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 
 }
 
-func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.WebDriver, link string, cvpdf string) {
+func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.WebDriver, link string, cvpdf string) bool {
+
+	reCaph := false
 
 	page.Get(link)
 	time.Sleep(time.Millisecond * 2500)
@@ -122,7 +124,7 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 		}
 		if idtoapply > 0 {
 			time.Sleep(time.Millisecond * 1000)
-			jo.ElaborateFrame_headless(dbsession, page, applybtm[0], cvpdf)
+			reCaph = jo.ElaborateFrame_headless(dbsession, page, applybtm[0], cvpdf)
 
 		} else {
 
@@ -141,10 +143,13 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 		}
 
 	}
+
+	return reCaph
 }
 
-func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page selenium.WebDriver, link selenium.WebElement, cvpdf string) {
+func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page selenium.WebDriver, link selenium.WebElement, cvpdf string) bool {
 
+	reCaph := false
 	time.Sleep(1000 * time.Millisecond)
 
 	link.Click()
@@ -152,114 +157,115 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 	if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
 
-		if _, err = form.FindElements(selenium.ByTagName, "iframe"); err == nil {
+		if frms, err := form.FindElements(selenium.ByTagName, "iframe"); err == nil {
 
-			log.Println("Fond recapha!!! Stop")
+			log.Println("Fond recapha!!! Stop", len(frms))
 
-		} else {
+			if len(frms) == 0 {
 
-			log.Println(err.Error())
+				if applydialog_style, err := form.GetAttribute("style"); err == nil {
 
-		}
+					if strings.HasPrefix(applydialog_style, "display: none") {
 
-		if applydialog_style, err := form.GetAttribute("style"); err == nil {
+						fmt.Println(" need move Up and try again")
 
-			if strings.HasPrefix(applydialog_style, "display: none") {
+						fmt.Println(link.Location())
+						linkloc, _ := link.Location()
+						x := linkloc.X
+						y := linkloc.Y
+						rawscript := "scroll(" + strconv.Itoa(y) + "," + strconv.Itoa(x) + ")"
+						fmt.Println(rawscript)
+						args := []interface{}{}
+						page.ExecuteScriptRaw(rawscript, args)
 
-				fmt.Println(" need move Up and try again")
-
-				fmt.Println(link.Location())
-				linkloc, _ := link.Location()
-				x := linkloc.X
-				y := linkloc.Y
-				rawscript := "scroll(" + strconv.Itoa(y) + "," + strconv.Itoa(x) + ")"
-				fmt.Println(rawscript)
-				args := []interface{}{}
-				page.ExecuteScriptRaw(rawscript, args)
-
-				time.Sleep(2000 * time.Millisecond)
-				if err := link.Click(); err != nil {
-
-					fmt.Println("error clicking ", err.Error())
-					fmt.Println(link.Location())
-					if err := link.Click(); err != nil {
-						fmt.Println("SECOND error clicking!! ", err.Error())
-
-					}
-
-				} else {
-					fmt.Println("Click on link OK")
-
-				}
-
-				time.Sleep(1000 * time.Millisecond)
-
-			}
-
-			if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
-
-				fmt.Println("allinputs", len(allinputs))
-
-				if len(allinputs) == 11 {
-					for _, input := range allinputs {
-
-						if type_atr, err := input.GetAttribute("type"); err == nil {
-							if type_atr == "file" {
-								input.SendKeys(cvpdf)
-								time.Sleep(2000 * time.Millisecond)
-
-							}
-
-						}
-
-					}
-
-					mytagstoinsert := mytags.GetMyTags("mytags.csv", jo.Tags)
-					coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter.csv")
-
-					if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
-
-						coverletter.SendKeys(coverlettertxt)
 						time.Sleep(2000 * time.Millisecond)
+						if err := link.Click(); err != nil {
 
-						if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
+							fmt.Println("error clicking ", err.Error())
+							fmt.Println(link.Location())
+							if err := link.Click(); err != nil {
+								fmt.Println("SECOND error clicking!! ", err.Error())
 
-							fmt.Printf("Please enter an integer: ")
-
-							// Read in an integer
-							var i int
-							_, err := fmt.Scanln(&i)
-							if err != nil {
-								fmt.Printf("Error: %s", err.Error())
-
-								// If int read fails, read as string and forget
-								var discard string
-								fmt.Scanln(&discard)
-								return
 							}
 
-							submitbtm.Submit()
-
-							jo.Applied = true
-							jo.UpdateApplyedEmployer(dbsession)
+						} else {
+							fmt.Println("Click on link OK")
 
 						}
+
 						time.Sleep(1000 * time.Millisecond)
 
 					}
 
-				} else {
+					if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
 
-					fmt.Println("!!!Input num not ==10")
+						fmt.Println("allinputs", len(allinputs))
 
+						if len(allinputs) == 11 {
+							for _, input := range allinputs {
+
+								if type_atr, err := input.GetAttribute("type"); err == nil {
+									if type_atr == "file" {
+										input.SendKeys(cvpdf)
+										time.Sleep(2000 * time.Millisecond)
+
+									}
+
+								}
+
+							}
+
+							mytagstoinsert := mytags.GetMyTags("mytags.csv", jo.Tags)
+							coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter.csv")
+
+							if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
+
+								coverletter.SendKeys(coverlettertxt)
+								time.Sleep(2000 * time.Millisecond)
+
+								if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
+
+									fmt.Printf("Please enter an integer: ")
+
+									// Read in an integer
+									var i int
+									_, err := fmt.Scanln(&i)
+									if err != nil {
+										fmt.Printf("Error: %s", err.Error())
+
+										// If int read fails, read as string and forget
+										var discard string
+										fmt.Scanln(&discard)
+										// return
+									}
+
+									submitbtm.Submit()
+
+									jo.Applied = true
+									jo.UpdateApplyedEmployer(dbsession)
+
+								}
+								time.Sleep(1000 * time.Millisecond)
+
+							}
+
+						} else {
+
+							fmt.Println("!!!Input num not ==10")
+
+						}
+
+					} else {
+
+						fmt.Println(err.Error())
+					}
 				}
-
 			} else {
 
-				fmt.Println(err.Error())
+				log.Println("recapha PRESENT", len(frms))
+				reCaph = true
+
 			}
-		} else {
-			fmt.Println(err.Error())
 
 		}
 
@@ -267,6 +273,8 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 		fmt.Println(err.Error())
 	}
+
+	return reCaph
 
 }
 

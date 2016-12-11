@@ -109,9 +109,20 @@ func main() {
 			fmt.Println("id", results[i].Id)
 
 			employer := handle_internal_link.NewInternalJobOffers(results[i])
-			(*employer).Apply_headless(*dbsession, wd, results[i].Id, cvpdf)
+			reCaph := (*employer).Apply_headless(*dbsession, wd, results[i].Id, cvpdf)
+
+			if reCaph {
+
+				log.Println("ReCaph Present Stop loop")
+				break
+
+			} else {
+				log.Println("ReCaph NOT present Continue loop")
+			}
 
 		}
+
+		wd.Quit()
 
 	}
 
