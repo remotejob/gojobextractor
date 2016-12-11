@@ -4,6 +4,8 @@ import (
 	"bufio"
 	"log"
 	"os"
+
+	"github.com/remotejob/gojobextractor/signupnext/compliteSignUp"
 )
 
 func main() {
@@ -17,6 +19,9 @@ func main() {
 		scanner := bufio.NewScanner(file)
 		for scanner.Scan() {
 			log.Println(scanner.Text())
+			link := scanner.Text()
+			compliteSignUp.Complite(link)
+
 		}
 
 		// check for errors

@@ -2,15 +2,12 @@ package compliteSignUp
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/tebeka/selenium"
 )
 
 func Complite(link string) {
-
-	log.Println(link)
 
 	caps := selenium.Capabilities{"browserName": "chrome"}
 	//				caps := selenium.Capabilities{"browserName": "phantomjs"}

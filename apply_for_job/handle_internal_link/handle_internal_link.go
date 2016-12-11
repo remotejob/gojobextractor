@@ -7,6 +7,8 @@ import (
 	"strings"
 	"time"
 
+	"log"
+
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/coverletter"
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/mytags"
 	"github.com/remotejob/gojobextractor/dbhandler"
@@ -146,9 +148,19 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 	time.Sleep(1000 * time.Millisecond)
 
 	link.Click()
-	time.Sleep(4000 * time.Millisecond)
+	time.Sleep(5000 * time.Millisecond)
 
 	if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
+
+		if _, err = form.FindElements(selenium.ByTagName, "iframe"); err == nil {
+
+			log.Println("Fond recapha!!! Stop")
+
+		} else {
+
+			log.Println(err.Error())
+
+		}
 
 		if applydialog_style, err := form.GetAttribute("style"); err == nil {
 

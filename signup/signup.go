@@ -40,7 +40,7 @@ func init() {
 		mechanism = cfg.Dbmgo.Mechanism
 		cvpdf = cfg.Cvpdf.File
 
-		displayNames = []string{"Freelancer Development", "Programmer Development", "Programmer Freelancer", "Remote Development"}
+		displayNames = []string{"Freelancer Development", "Programmer Development", "Programmer Freelancer", "Remote Development", "Support Development", "Programmer", "Free for Job"}
 
 	}
 
