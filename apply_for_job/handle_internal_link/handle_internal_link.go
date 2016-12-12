@@ -159,7 +159,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 		if frms, err := form.FindElements(selenium.ByTagName, "iframe"); err == nil {
 
-			log.Println("Fond recapha!!! Stop", len(frms))
+			log.Println("Check recapha if 1", len(frms))
 
 			if len(frms) == 0 {
 
@@ -225,19 +225,19 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 								if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
 
-									fmt.Printf("Please enter an integer: ")
+									// fmt.Printf("Please enter an integer: ")
 
-									// Read in an integer
-									var i int
-									_, err := fmt.Scanln(&i)
-									if err != nil {
-										fmt.Printf("Error: %s", err.Error())
+									// // Read in an integer
+									// var i int
+									// _, err := fmt.Scanln(&i)
+									// if err != nil {
+									// 	fmt.Printf("Error: %s", err.Error())
 
-										// If int read fails, read as string and forget
-										var discard string
-										fmt.Scanln(&discard)
-										// return
-									}
+									// 	// If int read fails, read as string and forget
+									// 	var discard string
+									// 	fmt.Scanln(&discard)
+									// 	// return
+									// }
 
 									submitbtm.Submit()
 
