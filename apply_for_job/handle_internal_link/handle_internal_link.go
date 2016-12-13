@@ -153,7 +153,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 	time.Sleep(1000 * time.Millisecond)
 
 	link.Click()
-	time.Sleep(5000 * time.Millisecond)
+	time.Sleep(6000 * time.Millisecond)
 
 	if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
 
