@@ -3,45 +3,8 @@
 if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
 
 
-cp config.gcfg.aikuis.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
 
-
-cp config.gcfg.alasti.eu config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-
-cp config.gcfg.alastomana.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-
-cp config.gcfg.alastomat.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-
-cp config.gcfg.alastomia.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-cp config.gcfg.alaston.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-
-cp config.gcfg.alastonkuvia.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-
-cp config.gcfg.alastonkuvia.info config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-cp config.gcfg.antaa.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-cp config.gcfg.astrologi.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
-cp config.gcfg.chatit.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
-
+# 12 -22
 cp config.gcfg.huoneisto.mobi config.gcfg && ./bin/apply_headless
 if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
 
@@ -77,6 +40,42 @@ if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_ca
 
 
 
+
+
+
+# 1 - 11
+cp config.gcfg.aikuis.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.alasti.eu config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.alastomana.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.alastomat.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.alastomia.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.alaston.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.alastonkuvia.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.alastonkuvia.info config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.antaa.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.astrologi.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+
+cp config.gcfg.chatit.fi config.gcfg && ./bin/apply_headless
+if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
 
 
 
