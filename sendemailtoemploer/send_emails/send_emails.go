@@ -15,9 +15,10 @@ import (
 
 func SendAll(dbsession mgo.Session, emails []domains.Email, login string, pass string) {
 
-	for _, email := range emails {
+	// for _, email := range emails {
+	for i := 0; i < 10; i++ {
 
-		send(dbsession, login, pass, email)
+		send(dbsession, login, pass, emails[i])
 		time.Sleep(4000 * time.Millisecond)
 	}
 

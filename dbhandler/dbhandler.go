@@ -1,11 +1,12 @@
 package dbhandler
 
 import (
-	"github.com/remotejob/gojobextractor/domains"
 	"fmt"
+	"log"
+
+	"github.com/remotejob/gojobextractor/domains"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-	"log"
 )
 
 func UpdateExtEmploerEmail(dbsession mgo.Session, email domains.Email) {
@@ -22,7 +23,7 @@ func UpdateExtEmploerEmail(dbsession mgo.Session, email domains.Email) {
 		log.Fatal(err)
 	}
 
-	joboffer.Applied = true
+	joboffer.Hits = 1
 
 	err = c.Update(bson.M{"id": email.Subject}, joboffer)
 	if err != nil {
@@ -39,8 +40,8 @@ func ExternalEmploers(dbsession mgo.Session) []domains.JobOffer {
 	c := dbsession.DB("cv_employers").C("employers")
 
 	var results []domains.JobOffer
-//	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""}, "location": bson.RegEx{Pattern: "Sweden", Options: "i"}, "applied": false}).All(&results)
-	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""},"applied": false}).All(&results)
+	//	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""}, "location": bson.RegEx{Pattern: "Sweden", Options: "i"}, "applied": false}).All(&results)
+	err := c.Find(bson.M{"externallink": bson.M{"$ne": ""}, "applied": false}).All(&results)
 
 	if err != nil {
 
@@ -83,7 +84,7 @@ func InsertRecord(dbsession mgo.Session, joboffer domains.JobOffer) {
 			log.Fatal(err)
 		}
 	} else {
-		fmt.Println("EXIST", count,joboffer.Id)
+		fmt.Println("EXIST", count, joboffer.Id)
 
 	}
 
@@ -134,3 +135,19 @@ func UpdateEmployerById(dbsession mgo.Session, id string) {
 
 }
 
+func FindEmployersForEmail(dbsession mgo.Session) []domains.JobOffer {
+
+	dbsession.SetMode(mgo.Monotonic, true)
+
+	c := dbsession.DB("cv_employers").C("employers")
+
+	var results []domains.JobOffer
+	err := c.Find(bson.M{"hits": 0}).All(&results)
+	if err != nil {
+
+		log.Fatal(err)
+	}
+
+	return results
+
+}
