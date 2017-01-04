@@ -32,8 +32,8 @@ if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_ca
 cp config.gcfg.kauniita.fi config.gcfg && ./bin/apply_headless
 if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
 
-cp config.gcfg.kertomukset.fi config.gcfg && ./bin/apply_headless
-if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
+#cp config.gcfg.kertomukset.fi config.gcfg && ./bin/apply_headless
+#if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
 
 cp config.gcfg.kiima.fi config.gcfg && ./bin/apply_headless
 if [ -f "./cant_apply.txt" ]; then ./bin/cant_apply;cat cant_apply.txt >> all_cant_apply.txt;rm -f cant_apply.txt;fi
