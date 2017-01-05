@@ -1,11 +1,12 @@
 package create_emails
 
 import (
-	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/mytags"
-	"github.com/remotejob/gojobextractor/domains"
 	"encoding/csv"
 	"fmt"
 	"os"
+
+	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/mytags"
+	"github.com/remotejob/gojobextractor/domains"
 )
 
 func Create(emplayers []domains.JobOffer) []domains.Email {
@@ -23,7 +24,7 @@ func Create(emplayers []domains.JobOffer) []domains.Email {
 
 	for _, joboffer := range emplayers {
 
-		fmt.Println("Send to:",joboffer.Id,joboffer.Externallink,joboffer.Email)
+		// fmt.Println("Send to:",joboffer.Id,joboffer.Externallink,joboffer.Email)
 		mytagstoinsert := mytags.GetMyTags("mytags.csv", joboffer.Tags)
 
 		body := "My experience:\n\n"
@@ -41,7 +42,7 @@ func Create(emplayers []domains.JobOffer) []domains.Email {
 		body = body + "\n\nThanks.\nAlex Mazurov"
 		body = body + "\n\nAtt:mazurov_cv.pdf"
 
-		emailtxt := domains.Email{joboffer.Email,joboffer.Id, body}
+		emailtxt := domains.Email{joboffer.Email, joboffer.Id, body}
 
 		emailstosend = append(emailstosend, emailtxt)
 

@@ -1,7 +1,6 @@
 package find_emploers_for_email
 
 import (
-	"fmt"
 	"net/url"
 	"strings"
 
@@ -36,7 +35,7 @@ func FindEmpl(dbsession mgo.Session) []domains.JobOffer {
 
 		} else if result.Email != "" && !strings.HasPrefix(result.Externallink, "mailto:") {
 
-			fmt.Print("get from mail record:", result.Email)
+			// fmt.Print("get from mail record:", result.Email)
 			to_email_emploers = append(to_email_emploers, result)
 
 		}

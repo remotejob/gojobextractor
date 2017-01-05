@@ -1,14 +1,15 @@
 package main
 
 import (
+	"log"
+	"time"
+
 	"github.com/remotejob/gojobextractor/domains"
 	"github.com/remotejob/gojobextractor/sendemailtoemploer/create_emails"
 	"github.com/remotejob/gojobextractor/sendemailtoemploer/find_emploers_for_email"
 	"github.com/remotejob/gojobextractor/sendemailtoemploer/send_emails"
 	"gopkg.in/gcfg.v1"
 	"gopkg.in/mgo.v2"
-	"log"
-	"time"
 )
 
 var glogin string
@@ -40,8 +41,8 @@ func init() {
 }
 
 func main() {
-	
-		mongoDBDialInfo := &mgo.DialInfo{
+
+	mongoDBDialInfo := &mgo.DialInfo{
 		Addrs:     addrs,
 		Timeout:   60 * time.Second,
 		Database:  database,
@@ -50,7 +51,7 @@ func main() {
 		Mechanism: mechanism,
 	}
 
-	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)	
+	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
 
 	if err != nil {
 		panic(err)
@@ -59,10 +60,11 @@ func main() {
 
 	results := find_emploers_for_email.FindEmpl(*dbsession)
 
+	log.Println("Need send ", len(results))
+
 	emailstosend := create_emails.Create(results)
 	if len(emailstosend) > 0 {
 		send_emails.SendAll(*dbsession, emailstosend, glogin, gpass)
 	}
-
 
 }

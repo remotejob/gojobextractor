@@ -16,7 +16,7 @@ import (
 func SendAll(dbsession mgo.Session, emails []domains.Email, login string, pass string) {
 
 	// for _, email := range emails {
-	for i := 0; i < 15; i++ {
+	for i := 0; i < 5; i++ {
 
 		send(dbsession, login, pass, emails[i])
 		time.Sleep(4000 * time.Millisecond)
@@ -45,9 +45,13 @@ func send(dbsession mgo.Session, glogin string, gpass string, emailtxt domains.E
 
 	err = email.Send("smtp.gmail.com:587", smtp.PlainAuth("", from, pass, "smtp.gmail.com"), m)
 	if err != nil {
-		log.Println(err)
-	}
+		// log.Println(err)
+		log.Panicln("DONT Update DB!")
+		log.Fatalln(err)
+	} else {
 
-	dbhandler.UpdateExtEmploerEmail(dbsession, emailtxt)
+		dbhandler.UpdateExtEmploerEmail(dbsession, emailtxt)
+
+	}
 
 }
