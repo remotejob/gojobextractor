@@ -241,8 +241,22 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 									submitbtm.Submit()
 
-									jo.Applied = true
-									jo.UpdateApplyedEmployer(dbsession)
+									fmt.Printf("Please enter an integer: ")
+
+									// Read in an integer
+									var i int
+									_, err := fmt.Scanln(&i)
+									if err != nil {
+										fmt.Printf("Error: %s", err.Error())
+
+										// If int read fails, read as string and forget
+										var discard string
+										fmt.Scanln(&discard)
+										// return
+									}
+
+									// jo.Applied = true
+									// jo.UpdateApplyedEmployer(dbsession)
 
 								}
 								time.Sleep(1000 * time.Millisecond)
