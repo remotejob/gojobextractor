@@ -78,3 +78,10 @@ java -jar selenium-server-standalone-2.53.0.jar \
    -port 4441
    -hub http://localhost:4444/grid/register \
    -browser "browserName=firefox,version=19,maxInstances=5"&
+
+
+
+
+   curl -XDELETE 'http://localhost:9200/twitter/'
+
+   curl 'localhost:9200/_cat/indices?v'

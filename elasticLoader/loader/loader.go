@@ -3,7 +3,6 @@ package loader
 import (
 	"context"
 	"fmt"
-	"strconv"
 
 	"log"
 
@@ -22,12 +21,7 @@ func Load(dbsession mgo.Session) {
 
 		log.Fatalln(err.Error())
 	}
-	// info, code, err := client.Ping("http://localhost:9200").Do()
-	// if err != nil {
-	// 	// Handle error
-	// 	panic(err)
-	// }
-	// fmt.Printf("Elasticsearch returned with code %d and version %s", code, info.Version.Number)
+
 	esversion, err := client.ElasticsearchVersion("http://127.0.0.1:9200")
 	if err != nil {
 		// Handle error
@@ -55,17 +49,12 @@ func Load(dbsession mgo.Session) {
 		}
 	}
 
-	// _, err = client.CreateIndex("emploers").Do()
-	// if err != nil {
-	// 	// Handle error
-	// 	panic(err)
-	// }
 	for i, result := range results {
 		// log.Println(result)
 		put1, err := client.Index().
-			Index("twitter").
-			Type("tweet").
-			Id(strconv.Itoa(i)).
+			Index("employers").
+			Type("employer").
+			Id(results[i].Id).
 			BodyJson(result).
 			Do(context.TODO())
 		if err != nil {
