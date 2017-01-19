@@ -201,7 +201,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 						fmt.Println("allinputs", len(allinputs))
 
-						if len(allinputs) == 11 {
+						if len(allinputs) == 12 {
 							for _, input := range allinputs {
 
 								if type_atr, err := input.GetAttribute("type"); err == nil {
@@ -269,7 +269,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 						} else {
 
-							fmt.Println("!!!Input num not ==10")
+							fmt.Println("!!!Input num not ==12")
 
 						}
 
