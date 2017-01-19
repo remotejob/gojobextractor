@@ -220,7 +220,9 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 							if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
 
+								log.Println("ready submit!!")
 								coverletter.SendKeys(coverlettertxt)
+
 								time.Sleep(2000 * time.Millisecond)
 
 								if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
@@ -240,7 +242,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 									// }
 
 									log.Println("Try submit!!")
-									time.Sleep(2000 * time.Millisecond)
+									time.Sleep(3000 * time.Millisecond)
 									submitbtm.Submit()
 
 									// fmt.Printf("Please enter an integer: ")
