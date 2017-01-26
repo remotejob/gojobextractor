@@ -7,11 +7,11 @@ import (
 	"github.com/remotejob/gojobextractor/domains"
 )
 
-func CreateCV(emplayer domains.JobOffer) {
+func CreateCV(emplayer domains.JobOffer, mytags []domains.Tags) {
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.SetHeaderFunc(func() {
 
-		pdf.Image("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/images/me_alex.jpg", 10, 10, 60, 0, false, "", 0, "")
+		pdf.Image("/home/juno/gowork/src/github.com/remotejob/gojobextractor/images/me_alex.jpg", 10, 10, 60, 0, false, "", 0, "")
 		// pdf.ImageOptions("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/images/me_alex.jpg", 10, 6, 40, 0, false, nil, 0, "")
 		pdf.SetY(5)
 		pdf.SetFont("Arial", "I", 10)
@@ -60,7 +60,10 @@ func CreateCV(emplayer domains.JobOffer) {
 	})
 	pdf.AliasNbPages("")
 	pdf.AddPage()
-
+	pdf.SetX(40)
+	pdf.CellFormat(70, 10, "ref:"+emplayer.Id, "", 0, "C", false, 0, "")
+	pdf.Ln(-1)
+	pdf.CellFormat(70, 10, "app:"+emplayer.Title, "", 0, "C", false, 0, "")
 	err := pdf.OutputFileAndClose("/tmp/my_cv.pdf")
 	if err == nil {
 		fmt.Println("Successfully generated my_cv.pdf")
