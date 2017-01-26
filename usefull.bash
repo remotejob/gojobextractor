@@ -82,6 +82,13 @@ java -jar selenium-server-standalone-2.53.0.jar \
 
 
 
+
+mongodump --host 138.197.8.81 --port 27017 --username **** --password **** --out /tmp/mongodump
+
+
+mongo --host 138.197.8.81 --port 27017 --username **** --password ***** --authenticationMechanism SCRAM-SHA-1 --authenticationDatabase admin gkeywords robo_scripts/dedup.js 
+
+
    curl -XDELETE 'http://localhost:9200/twitter/'
 
    curl 'localhost:9200/_cat/indices?v'
