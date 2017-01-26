@@ -81,8 +81,6 @@ java -jar selenium-server-standalone-2.53.0.jar \
 
 
 
-
-
 mongodump --host 138.197.8.81 --port 27017 --username **** --password **** --out /tmp/mongodump
 
 
