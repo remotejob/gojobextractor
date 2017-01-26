@@ -90,3 +90,6 @@ mongo --host 138.197.8.81 --port 27017 --username **** --password ***** --authen
    curl -XDELETE 'http://localhost:9200/twitter/'
 
    curl 'localhost:9200/_cat/indices?v'
+
+
+ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=latest_cv_compressed.pdf latest_cv.pdf
