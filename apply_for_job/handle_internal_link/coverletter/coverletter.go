@@ -1,10 +1,11 @@
 package coverletter
 
 import (
-	"github.com/remotejob/gojobextractor/domains"
 	"encoding/csv"
 	"fmt"
 	"os"
+
+	"github.com/remotejob/gojobextractor/domains"
 )
 
 var coverlettertxt string

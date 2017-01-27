@@ -37,8 +37,8 @@ func init() {
 		username = cfg.Dbmgo.Username
 		password = cfg.Dbmgo.Password
 		mechanism = cfg.Dbmgo.Mechanism
-		cvpdf = cfg.Cvpdf.File
-
+		// cvpdf = cfg.Cvpdf.File
+		cvpdf = "/tmp/my_cv.pdf"
 	}
 
 }
@@ -104,7 +104,8 @@ func main() {
 		btm.Click()
 		time.Sleep(time.Millisecond * 4000)
 
-		for i := 0; i < len(results); i++ {
+		// for i := 0; i < len(results); i++ {
+		for i := 0; i < 2; i++ {
 
 			fmt.Println("id", results[i].Id)
 

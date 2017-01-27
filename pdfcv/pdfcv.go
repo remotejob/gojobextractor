@@ -19,7 +19,6 @@ func CreateCV(emplayer domains.JobOffer, mytags []domains.Tags) {
 	pdf.SetHeaderFunc(func() {
 
 		pdf.Image("/home/juno/gowork/src/github.com/remotejob/gojobextractor/images/me_alex.jpg", 10, 10, 60, 0, false, "", 0, "")
-		// pdf.ImageOptions("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/images/me_alex.jpg", 10, 6, 40, 0, false, nil, 0, "")
 		pdf.SetY(5)
 		pdf.SetFont("Arial", "I", 10)
 		pdf.SetX(110)
@@ -51,10 +50,6 @@ func CreateCV(emplayer domains.JobOffer, mytags []domains.Tags) {
 		pdf.SetX(95)
 		pdf.CellFormat(20, 6, "Address:", "LRT", 0, "", false, 0, "")
 		pdf.CellFormat(65, 6, "Hogberginkuja 1 Lappohja", "LRT", 0, "", false, 0, "")
-		// pdf.Ln(-1)
-		// pdf.SetX(95)
-		// pdf.CellFormat(20, 6, "", "LR", 0, "", false, 0, "")
-		// pdf.CellFormat(65, 6, "Lappohja", "LR", 0, "", false, 0, "")
 		pdf.Ln(-1)
 		pdf.SetX(95)
 		pdf.CellFormat(20, 6, "", "LRB", 0, "", false, 0, "")
