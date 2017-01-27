@@ -65,7 +65,7 @@ func init() {
 
 	fmt.Println("implouers to apply", len(results))
 	joboffer = results[10]
-	_mytagstoinsert = mytags.GetMyTags("mytags.csv", joboffer.Tags)
+	_mytagstoinsert = mytags.GetMyTags("/home/juno/gowork/src/github.com/remotejob/gojobextractor/mytags.csv", joboffer.Tags)
 }
 
 func TestCreateCV(t *testing.T) {
