@@ -150,14 +150,14 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 }
 
 func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
-	bconfig := toml_parser.Parse("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/cv.toml")
+	bconfig := toml_parser.Parse("cv.toml")
 	header := []string{"Item", "Duration", "Info"}
 	// jobplaceheader := []string{"Company", "Duration", "Position", "Details", "Location", "Country"}
 
 	pdf := gofpdf.New("P", "mm", "A4", "")
 	pdf.SetHeaderFunc(func() {
 
-		pdf.Image("/home/juno/gowork/src/github.com/remotejob/gojobextractor/images/me_alex.jpg", 10, 10, 60, 0, false, "", 0, "")
+		pdf.Image("images/me_alex.jpg", 10, 10, 60, 0, false, "", 0, "")
 		pdf.SetY(5)
 		pdf.SetFont("Arial", "I", 10)
 		pdf.SetX(110)

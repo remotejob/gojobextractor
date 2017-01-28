@@ -1,0 +1,367 @@
+
+maintitle ="Aleksander Mazurov CV"
+subtitle ="Professional Experience/Knowledge"  
+[[cv]]
+name = "Programming Languages"
+path = "Programming-languages.html"
+img="assets/images/"
+
+  [[cv.item]]
+  	title="Java"
+  	rank = 5
+  	duration = 10
+  	link =""
+  	extra="was used as main language in production in all areas"
+  	img="assets/images/java.jpg" 
+  	
+  [[cv.item]]
+  	title="C"
+  	rank =4
+  	duration = 3
+  	link =""	
+  	extra="was used in a big communication project" 
+  	img="assets/images/c.png" 
+  	
+	
+  [[cv.item]]
+  	title="GoLang"
+	rank=5
+  	duration = 3
+  	link =""		
+  	extra="actually used now in production as substitute for JAVA" 
+  	img="assets/images/golang.png" 
+  	
+	
+  [[cv.item]]
+  	title="JavaScript"
+	rank=4
+  	duration = 2
+  	link =""
+  	extra="actually used as main language for Web Application" 
+  	img="assets/images/javascript.png" 
+  	
+  		
+  [[cv.item]]
+  	title="Dart"
+	rank= 3
+  	duration = 1
+  	link =""
+  	extra="used before JavaScript" 
+  	img="assets/images/dart.png" 
+  	
+  		
+  [[cv.item]]
+   	title="Ruby"
+	rank=3
+  	duration = 1
+  	link =""	
+  	extra="was used before Golang" 
+  	img="assets/images/ruby.jpg" 
+  	
+	       
+  [[cv.item]]
+  	title="Python"
+	rank=2
+  	duration = 1
+  	link =""	
+  	extra="in some cases was used in production" 
+  	img="assets/images/python.png" 
+  	
+  		 
+  [[cv.item]]
+    title="PHP"
+	rank= 1
+  	duration = 1
+  	link =""					 
+  	extra="was used for web application before Java" 
+  	img="assets/images/php.png" 
+  	
+	   
+[[cv]]
+name = "Operating Systems"
+path = "Operating-systems.html"
+img="assets/images/"
+    
+  [[cv.item]]
+  	title="Linux"
+  	rank = 5
+  	duration = 22
+  	link =""	
+  	extra="99% used in production as main OS" 
+  	img="assets/images/linux.png" 
+  	
+ 
+  [[cv.item]]
+  	title="FreeBsd"
+  	rank = 3
+  	duration = 1
+  	link =""	
+  	extra="was used in production abandoned now in favor of Linux" 
+  	img="assets/images/freebsd.png" 
+  	
+ 
+  [[cv.item]]
+  	title="Solaris"
+  	rank = 2
+  	duration = 1
+  	link =""	
+  	extra="was used in production abandoned now in favor of Linux" 
+  	img="assets/images/solaris.gif" 
+  	
+ 	
+  [[cv.item]]
+  	title="Cisco IOS"
+  	rank = 2
+  	duration = 1
+  	link =""	
+  	extra="was used in production for VOIP abandoned now in favor of Linux" 
+  	img="assets/images/cisco.jpg" 
+  	
+ 
+[[cv]]
+name = "Data Bases"
+path = "Data-bases.html"
+img="assets/images/"
+
+  [[cv.item]]
+  	title="ElasticSearch"
+  	rank = 5	
+  	duration = 1
+  	link =""	
+  	extra="used in some cases" 
+  	img="assets/images/mysql.png" 
+
+  [[cv.item]]
+  	title="MongoDB"
+  	rank = 5	
+  	duration = 2
+  	link =""	
+  	extra="mostly used in production" 
+  	img="assets/images/mysql.png" 
+  
+  [[cv.item]]
+  	title="Mysql"
+  	rank = 5	
+  	duration = 20
+  	link =""	
+  	extra="mostly used in production before NOSQL DB" 
+  	img="assets/images/mysql.png" 
+  	
+ 
+  [[cv.item]]
+  	title="Redis"
+  	rank = 4
+  	duration = 2
+  	link =""	
+  	extra="widely used in production especially in Clouds structure " 
+  	img="assets/images/redis.png" 
+  	
+   	
+   [[cv.item]]
+  	title="Sqlite"
+  	rank = 3
+   	duration = 1
+  	link =""	
+  	extra="in some cases was used in production for small application" 
+  	img="assets/images/sqlite.png" 
+  	
+  	
+   [[cv.item]]
+  	title="Postgresql"
+  	rank = 4
+  	duration = 3
+  	link =""	
+  	extra="was use before MySQL as main DB"  	
+  	img="assets/images/postgresql.png" 
+  	
+  
+   [[cv.item]]
+  	title="Oracle"
+  	rank = 2
+  	duration = 1
+  	link =""	
+   	extra="was only tested as potential replacement for MySQL" 
+   	img="assets/images/oracle.png" 
+  	
+   	
+[[cv]]
+name = "Telecommunication Application"
+path = "Telecommunication-application.html"
+img="assets/images/"
+  	
+   [[cv.item]]
+  	title="Asterisk"
+  	rank = 5
+  	duration = 12
+  	link =""	
+   	extra="used as main application for production" 
+   	img="assets/images/asterisk.png"
+   	  	
+   [[cv.item]]
+  	title="Kamailio"
+  	rank = 3
+  	duration = 1
+  	link =""	
+   	extra="was only tested as potential replacement for Asterisk" 
+   	img="assets/images/kamailio.png"
+   	  	
+  	
+   [[cv.item]]
+  	title="Cisco"
+  	rank = 2
+  	duration = 1
+  	link =""	
+   	extra="was used in production" 
+   	img="assets/images/cisco.jpg"
+   	  	
+  	
+   [[cv.item]]
+  	title="Kannel"
+  	rank = 4
+  	duration = 8
+  	link =""	
+   	extra="main application for SMS messages actually in use" 
+   	img="assets/images/kannel.png"
+   	  	
+  	  	
+[[cv]]
+name = "WebApplication Development"
+path = "WebApplication-development.html"
+img="assets/images/"
+
+   [[cv.item]]
+  	title="ReactJS"
+  	rank = 5
+  	duration = 1
+  	link =""	
+   	extra="actually used in production" 
+   	img="assets/images/angularjs.png"
+  	
+   [[cv.item]]
+  	title="Angularjs"
+  	rank = 5
+  	duration = 2
+  	link =""	
+   	extra="actually used in production" 
+   	img="assets/images/angularjs.png"
+
+   [[cv.item]]
+  	title="GoLang templates"
+  	rank = 5
+  	duration = 2
+  	link =""	
+   	extra="used in production for SEO sites improvement" 
+   	img="assets/images/angularjs.png"   	  	   	  	
+  	
+   [[cv.item]]
+  	title="Google Web Toolkit"
+  	rank = 3
+  	duration = 1
+  	link =""	
+   	extra="abandoned in favor of Angularjs" 
+   	img="assets/images/gwt.png"
+   	  	
+  	
+   [[cv.item]]
+  	title="Ruby on Rails"
+  	rank = 3
+  	duration = 1
+  	link =""	
+   	extra="used before Angularjs/ReactJS frameworks" 
+   	img="assets/images/rubyonrails.png"
+   	
+   [[cv.item]]
+  	title="Django"
+  	rank = 2
+  	duration = 1
+  	link ="https://www.djangoproject.com"	
+   	extra="was used in come cases JavaSript frameworks" 
+   	img="assets/images/django.png"   	
+   	  	
+   	  	  	
+[[cv]]
+name = "Cloud Computing"
+path = "Cloud-computing.html"
+img="assets/images/"
+
+   [[cv.item]]
+  	title="Digital Ocean"
+  	rank = 5
+  	duration = 2
+  	link =""	
+   	extra="actually used in production as main platform" 
+   	img="assets/images/digitalocean.png"
+   	  	
+  	
+   [[cv.item]]
+  	title="Amazon Web Service"
+  	rank = 5
+  	duration = 6
+  	link ="http://aws.amazon.com/"	
+   	extra="still main production based on AWS" 
+   	img="assets/images/aws.gif"
+   	
+   [[cv.item]]
+  	title="Google App Engine"
+  	rank = 5
+  	duration = 6
+  	link ="https://cloud.google.com/appengine/docs/whatisgoogleappengine"	
+   	extra="still in use but abandoned in favor of Digital Ocean" 
+   	img="assets/images/googleappengine.jpg"   	
+   	  	  	
+   [[cv.item]]
+  	title="Rackspace"
+  	rank = 4 	  	  	
+   	duration = 6
+  	link =""	
+   	extra="still in use but abandoned in favor of Digital Ocean" 
+   	img="assets/images/rackspace.png"
+   	  	
+   [[cv.item]]
+  	title="Heroku"
+  	rank = 1 	  	  	
+   	duration = 1
+  	link ="https://www.heroku.com"	
+   	extra="only was tested" 
+   	img="assets/images/heroku.png"
+
+   [[cv.item]]
+  	title="Docker"
+  	rank = 5 	  	  	
+   	duration = 2
+  	link ="https://www.docker.com/"	
+   	extra="actually used in combination Docker/Kubernates" 
+   	img="assets/images/docker.png"   	
+   	   	 	 	   	  	 	 	  	
+[[cv]]
+name = "SEO Computing"
+path = "Seo-computing.html"
+img="assets/images/"
+
+   [[cv.item]]
+  	title="Organic optimization"
+  	rank = 5
+  	duration = 8
+  	link =""	
+   	extra="constantly monitored and studied" 
+   	img="assets/images/seo.jpg"
+   	  	
+  	
+   [[cv.item]]
+  	title="AdWords"
+  	rank = 5
+  	duration = 3
+  	link =""	
+   	extra="used in production" 
+   	img="assets/images/adwords.png"
+   	  	
+  	
+   [[cv.item]]
+  	title="AdSense"
+  	rank = 3 	  	  	
+   	duration = 3
+  	link =""	
+   	extra="used in production" 
+   	img="assets/images/adsense.png"  	
+  		 			
+  
