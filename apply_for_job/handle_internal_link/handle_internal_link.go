@@ -110,7 +110,7 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 
 					applybtm = append(applybtm, alllinks[i])
 
-				}b
+				}
 
 			}
 
