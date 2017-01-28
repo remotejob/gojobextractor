@@ -6,7 +6,7 @@
 # Folders
 _obj
 _test
-config.*
+config.gcfg
 cant_apply.txt
 all_cant_apply.txt
 signuplinks.csv
