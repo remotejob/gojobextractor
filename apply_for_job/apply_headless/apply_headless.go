@@ -105,7 +105,7 @@ func main() {
 		time.Sleep(time.Millisecond * 4000)
 
 		// for i := 0; i < len(results); i++ {
-		for i := 0; i < 3; i++ {
+		for i := 0; i < 5; i++ {
 
 			fmt.Println("id", results[i].Id)
 
