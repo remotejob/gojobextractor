@@ -4,7 +4,7 @@ slogin = nuori@nuori.co
 
 [pass]
 gpass ="bancariobiz1Rel"
-spass ="seosipvip164"
+spass ="sipvip164"
 
 [dbmgo]
 addrs ="104.236.237.125"
