@@ -1,10 +1,10 @@
 [login]
 glogin = "support@sinelga.com"
-slogin = programming@kertomukset.fi
+slogin = vs@vitsit.co
 
 [pass]
 gpass ="bancariobiz1Rel"
-spass ="support1Rel"
+spass ="vssipvip164"
 
 [dbmgo]
 addrs ="104.236.237.125"
@@ -18,6 +18,4 @@ startpage = 0
 stoppage = 20
 
 [Cvpdf]
-file ="/home/juno/gowork/src/github.com/remotejob/gojobextractor/mazurov_cv.pdf"
-
-
+file =""

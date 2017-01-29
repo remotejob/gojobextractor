@@ -314,64 +314,94 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 	var mytagstoinsert []domains.Tags
 	reCaph := false
-	time.Sleep(1000 * time.Millisecond)
+	time.Sleep(2000 * time.Millisecond)
 
 	link.Click()
 	time.Sleep(6000 * time.Millisecond)
 	if frms, err := page.FindElements(selenium.ByTagName, "iframe"); err == nil {
 
-		if len(frms) == 0 {
+		for _, frm := range frms {
 
-			if form, err := page.FindElement(selenium.ByID, "file-upload-form"); err == nil {
+			if frmtitle, err := frm.GetAttribute("title"); err == nil {
+				log.Println(frmtitle)
 
-				log.Println("file-upload-form OK")
-				mytagstoinsert = mytags.GetMyTags("mytags.csv", jo.Tags)
-				if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
+				if frmtitle == "recaptcha widget" {
 
-					fmt.Println("allinputs", len(allinputs))
-					for _, input := range allinputs {
-						if type_atr, err := input.GetAttribute("type"); err == nil {
-							if type_atr == "file" {
+					reCaph = true
 
-								log.Println("need create new PDF file")
-								jo.CreatePdfCv(mytagstoinsert)
-								time.Sleep(3000 * time.Millisecond)
-								input.SendKeys(cvpdf)
-								time.Sleep(3000 * time.Millisecond)
+					return reCaph
 
-							}
-						}
+				}
+			}
+		}
+
+	}
+
+	// 	if len(frms) == 0 {
+
+	if form, err := page.FindElement(selenium.ByID, "file-upload-form"); err == nil {
+
+		log.Println("file-upload-form OK")
+		mytagstoinsert = mytags.GetMyTags("mytags.csv", jo.Tags)
+		if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
+
+			fmt.Println("allinputs", len(allinputs))
+			for _, input := range allinputs {
+				if type_atr, err := input.GetAttribute("type"); err == nil {
+					if type_atr == "file" {
+
+						log.Println("need create new PDF file")
+						jo.CreatePdfCv(mytagstoinsert)
+						time.Sleep(3000 * time.Millisecond)
+						input.SendKeys(cvpdf)
+						time.Sleep(3000 * time.Millisecond)
+
 					}
 				}
-
 			}
-			if textarea, err := page.FindElement(selenium.ByID, "CoverLetter"); err == nil {
-				log.Println("CoverLetter OK")
+		}
 
-				coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter_simple.csv")
-				time.Sleep(3000 * time.Millisecond)
-				textarea.Clear()
+	}
+	if textarea, err := page.FindElement(selenium.ByID, "CoverLetter"); err == nil {
+		log.Println("CoverLetter OK")
 
-				textarea.SendKeys(coverlettertxt)
+		coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter_simple.csv")
+		time.Sleep(3000 * time.Millisecond)
+		textarea.Clear()
 
-				time.Sleep(5000 * time.Millisecond)
+		textarea.SendKeys(coverlettertxt)
 
-			}
-			if subbuttom, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[8]/input"); err == nil {
-				log.Println("Submit OK")
-				jo.Applied = true
-				jo.UpdateApplyedEmployer(dbsession)
-				time.Sleep(3000 * time.Millisecond)
-				subbuttom.Submit()
+		time.Sleep(5000 * time.Millisecond)
 
-			}
-		} else {
+	}
+	if subbuttom, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[8]/input"); err == nil {
+		log.Println("Submit OK")
+		jo.Applied = true
+		jo.UpdateApplyedEmployer(dbsession)
+		time.Sleep(3000 * time.Millisecond)
+		subbuttom.Submit()
 
-			log.Println("recapha PRESENT", len(frms))
-			reCaph = true
+	} else {
+
+		log.Println("NO SUBMIT 1 !!!")
+		if submitbtm, err := page.FindElement(selenium.ByID, "apply-submit"); err == nil {
+			log.Println("NO SUBMIT 2 OK")
+
+			jo.Applied = true
+			jo.UpdateApplyedEmployer(dbsession)
+			time.Sleep(3000 * time.Millisecond)
+			submitbtm.Submit()
 
 		}
+
 	}
+	// 	} else {
+
+	// 		log.Println("recapha PRESENT", len(frms))
+	// 		reCaph = true
+
+	// 	}
+	// }
 
 	return reCaph
 
