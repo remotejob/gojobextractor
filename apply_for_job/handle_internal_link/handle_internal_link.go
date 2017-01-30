@@ -125,6 +125,15 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 
 		}
 		if idtoapply > 0 {
+			file, err := os.OpenFile("applyto.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+			if err != nil {
+				panic(err)
+			}
+			defer file.Close()
+
+			if _, err = file.WriteString(link + "\n"); err != nil {
+				panic(err)
+			}
 			time.Sleep(time.Millisecond * 1000)
 			reCaph = jo.ElaborateFrame_headless(dbsession, page, applybtm[0], cvpdf)
 
@@ -149,6 +158,136 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 	return reCaph
 }
 
+func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page selenium.WebDriver, link selenium.WebElement, cvpdf string) bool {
+
+	var mytagstoinsert []domains.Tags
+	reCaph := false
+	time.Sleep(2000 * time.Millisecond)
+
+	// link.Click()
+
+	if err := link.Click(); err != nil {
+
+		fmt.Println("error clicking ", err.Error())
+		fmt.Println(link.Location())
+		if err := link.Click(); err != nil {
+			fmt.Println("SECOND error clicking!! ", err.Error())
+
+		}
+
+	} else {
+		fmt.Println("Click on link OK")
+
+	}
+	time.Sleep(6000 * time.Millisecond)
+	if frms, err := page.FindElements(selenium.ByTagName, "iframe"); err == nil {
+
+		for _, frm := range frms {
+
+			if frmtitle, err := frm.GetAttribute("title"); err == nil {
+				log.Println(frmtitle)
+
+				if frmtitle == "recaptcha widget" {
+
+					reCaph = true
+
+					return reCaph
+
+				}
+			}
+		}
+
+	}
+
+	// 	if len(frms) == 0 {
+
+	if form, err := page.FindElement(selenium.ByID, "file-upload-form"); err == nil {
+
+		log.Println("file-upload-form OK")
+		mytagstoinsert = mytags.GetMyTags("mytags.csv", jo.Tags)
+		if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
+
+			fmt.Println("allinputs", len(allinputs))
+			for _, input := range allinputs {
+				if type_atr, err := input.GetAttribute("type"); err == nil {
+					if type_atr == "file" {
+
+						log.Println("need create new PDF file")
+						jo.CreatePdfCv(mytagstoinsert)
+						time.Sleep(3000 * time.Millisecond)
+						input.SendKeys(cvpdf)
+						time.Sleep(3000 * time.Millisecond)
+
+					}
+				}
+			}
+		}
+
+	}
+	if textarea, err := page.FindElement(selenium.ByID, "CoverLetter"); err == nil {
+		log.Println("CoverLetter OK")
+
+		coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter_simple.csv")
+		time.Sleep(3000 * time.Millisecond)
+		textarea.Clear()
+
+		textarea.SendKeys(coverlettertxt)
+
+		time.Sleep(5000 * time.Millisecond)
+
+	}
+	if subbuttom, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[8]/input"); err == nil {
+		log.Println("Submit OK")
+		jo.Applied = true
+		jo.UpdateApplyedEmployer(dbsession)
+		time.Sleep(3000 * time.Millisecond)
+		subbuttom.Submit()
+
+	} else {
+
+		log.Println("NO SUBMIT 1 !!!")
+		if submitbtm, err := page.FindElement(selenium.ByID, "apply-submit"); err == nil {
+			log.Println("SUBMIT 2 OK")
+
+			jo.Applied = true
+			jo.UpdateApplyedEmployer(dbsession)
+			time.Sleep(3000 * time.Millisecond)
+			submitbtm.Submit()
+
+		}
+
+	}
+	// 	} else {
+
+	// 		log.Println("recapha PRESENT", len(frms))
+	// 		reCaph = true
+
+	// 	}
+	// }
+
+	return reCaph
+
+}
+
+func (jo *InternalJobOffer) UpdateApplyedEmployer(dbsession mgo.Session) {
+
+	applyedemployer := domains.JobOffer{
+		Id:           jo.Id,
+		Company:      jo.Company,
+		Title:        jo.Title,
+		Location:     jo.Location,
+		Tags:         jo.Tags,
+		Externallink: jo.Externallink,
+		Email:        jo.Email,
+		Hits:         jo.Hits,
+		Created_at:   jo.Created_at,
+		Applied:      jo.Applied,
+		Description:  jo.Description,
+	}
+
+	dbhandler.UpdateEmployer(dbsession, applyedemployer)
+
+}
 func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
 	bconfig := toml_parser.Parse("cv.toml")
 	header := []string{"Item", "Duration", "Info"}
@@ -308,123 +447,6 @@ func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
 	} else {
 		fmt.Println(err)
 	}
-}
-
-func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page selenium.WebDriver, link selenium.WebElement, cvpdf string) bool {
-
-	var mytagstoinsert []domains.Tags
-	reCaph := false
-	time.Sleep(2000 * time.Millisecond)
-
-	link.Click()
-	time.Sleep(6000 * time.Millisecond)
-	if frms, err := page.FindElements(selenium.ByTagName, "iframe"); err == nil {
-
-		for _, frm := range frms {
-
-			if frmtitle, err := frm.GetAttribute("title"); err == nil {
-				log.Println(frmtitle)
-
-				if frmtitle == "recaptcha widget" {
-
-					reCaph = true
-
-					return reCaph
-
-				}
-			}
-		}
-
-	}
-
-	// 	if len(frms) == 0 {
-
-	if form, err := page.FindElement(selenium.ByID, "file-upload-form"); err == nil {
-
-		log.Println("file-upload-form OK")
-		mytagstoinsert = mytags.GetMyTags("mytags.csv", jo.Tags)
-		if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
-
-			fmt.Println("allinputs", len(allinputs))
-			for _, input := range allinputs {
-				if type_atr, err := input.GetAttribute("type"); err == nil {
-					if type_atr == "file" {
-
-						log.Println("need create new PDF file")
-						jo.CreatePdfCv(mytagstoinsert)
-						time.Sleep(3000 * time.Millisecond)
-						input.SendKeys(cvpdf)
-						time.Sleep(3000 * time.Millisecond)
-
-					}
-				}
-			}
-		}
-
-	}
-	if textarea, err := page.FindElement(selenium.ByID, "CoverLetter"); err == nil {
-		log.Println("CoverLetter OK")
-
-		coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter_simple.csv")
-		time.Sleep(3000 * time.Millisecond)
-		textarea.Clear()
-
-		textarea.SendKeys(coverlettertxt)
-
-		time.Sleep(5000 * time.Millisecond)
-
-	}
-	if subbuttom, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[8]/input"); err == nil {
-		log.Println("Submit OK")
-		jo.Applied = true
-		jo.UpdateApplyedEmployer(dbsession)
-		time.Sleep(3000 * time.Millisecond)
-		subbuttom.Submit()
-
-	} else {
-
-		log.Println("NO SUBMIT 1 !!!")
-		if submitbtm, err := page.FindElement(selenium.ByID, "apply-submit"); err == nil {
-			log.Println("NO SUBMIT 2 OK")
-
-			jo.Applied = true
-			jo.UpdateApplyedEmployer(dbsession)
-			time.Sleep(3000 * time.Millisecond)
-			submitbtm.Submit()
-
-		}
-
-	}
-	// 	} else {
-
-	// 		log.Println("recapha PRESENT", len(frms))
-	// 		reCaph = true
-
-	// 	}
-	// }
-
-	return reCaph
-
-}
-
-func (jo *InternalJobOffer) UpdateApplyedEmployer(dbsession mgo.Session) {
-
-	applyedemployer := domains.JobOffer{
-		Id:           jo.Id,
-		Company:      jo.Company,
-		Title:        jo.Title,
-		Location:     jo.Location,
-		Tags:         jo.Tags,
-		Externallink: jo.Externallink,
-		Email:        jo.Email,
-		Hits:         jo.Hits,
-		Created_at:   jo.Created_at,
-		Applied:      jo.Applied,
-		Description:  jo.Description,
-	}
-
-	dbhandler.UpdateEmployer(dbsession, applyedemployer)
-
 }
 
 // if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
