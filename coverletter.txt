@@ -11,7 +11,7 @@ Telecommunication(Voip-SMS-Asterisk-CiscoIOS),
 Web Application(WebService-Reactjs-Angular 2-RubyOnRails),
 Databases(MongoDB-Redis-MySql-PostgreSQL),
 Clouds(AWS-DigitalOcean-ContainerEngine),
-Virtualization(LinuxKVM-Docker),
+Virtualization(LinuxKVM-Docker/kubernetes),
 Unit tests(Selenium-Protractor-Ginkgo),
 SEO(Organic Web Search Optimization).
 
