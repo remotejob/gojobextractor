@@ -203,7 +203,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 	if form, err := page.FindElement(selenium.ByID, "file-upload-form"); err == nil {
 
-		log.Println("file-upload-form OK")
+		// log.Println("file-upload-form OK")
 		mytagstoinsert = mytags.GetMyTags("mytags.csv", jo.Tags)
 		if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
 
@@ -257,13 +257,6 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 		}
 
 	}
-	// 	} else {
-
-	// 		log.Println("recapha PRESENT", len(frms))
-	// 		reCaph = true
-
-	// 	}
-	// }
 
 	return reCaph
 
