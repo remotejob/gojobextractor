@@ -3,14 +3,15 @@ package main
 import (
 	//	"flag"
 	//	"fmt"
-	"gopkg.in/gcfg.v1"	
-	"github.com/remotejob/gojobextractor/domains"
-	"github.com/remotejob/gojobextractor/find_new_offers/find_new_simple/findalllinks"
-	"github.com/remotejob/gojobextractor/find_new_offers/find_new_simple/jobdetails_simple"
-	"gopkg.in/mgo.v2"
 	"log"
 	"strconv"
 	"time"
+
+	"github.com/remotejob/gojobextractor/domains"
+	"github.com/remotejob/gojobextractor/find_new_offers/find_new_simple/findalllinks"
+	"github.com/remotejob/gojobextractor/find_new_offers/find_new_simple/jobdetails_simple"
+	"gopkg.in/gcfg.v1"
+	"gopkg.in/mgo.v2"
 )
 
 var addrs []string
@@ -31,11 +32,11 @@ func init() {
 
 		addrs = cfg.Dbmgo.Addrs
 		database = cfg.Dbmgo.Database
-		username =	cfg.Dbmgo.Username
-		password = 	cfg.Dbmgo.Password
+		username = cfg.Dbmgo.Username
+		password = cfg.Dbmgo.Password
 		mechanism = cfg.Dbmgo.Mechanism
 		startpage = cfg.Pages.Startpage
-		stoppage = 	cfg.Pages.Stoppage							
+		stoppage = cfg.Pages.Stoppage
 	}
 
 }
@@ -43,31 +44,33 @@ func init() {
 func main() {
 
 	mongoDBDialInfo := &mgo.DialInfo{
-	Addrs:    addrs,
-	Timeout:  60 * time.Second,
-	Database: database,
-	Username: username,
-	Password: password,
-	Mechanism: mechanism, 	
-}
+		Addrs:     addrs,
+		Timeout:   60 * time.Second,
+		Database:  database,
+		Username:  username,
+		Password:  password,
+		Mechanism: mechanism,
+	}
 
-//	dbsession, err := mgo.Dial("127.0.0.1")
+	//	dbsession, err := mgo.Dial("127.0.0.1")
 	dbsession, err := mgo.DialWithInfo(mongoDBDialInfo)
 	if err != nil {
 		panic(err)
 	}
 	defer dbsession.Close()
 
-	for i :=startpage ; i < stoppage; i++ {
+	for i := startpage; i < stoppage; i++ {
 
 		navigstr := "http://stackoverflow.com/jobs?sort=p&pg=" + strconv.Itoa(i)
 		links := findalllinks.FindAll(navigstr)
 
 		for _, link := range links {
-			
-			fulllink := "http://stackoverflow.com" +link
+
+			// fulllink := "http://stackoverflow.com" + link
 			newJobentry := jobdetails_simple.NewJobOffers()
-			(*newJobentry).ParsePage(fulllink)
+			// (*newJobentry).ParsePage(fulllink)
+			(*newJobentry).ParsePage(link)
+
 			(*newJobentry).ExamDbRecord(*dbsession)
 
 		}
