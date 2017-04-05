@@ -234,7 +234,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 		textarea.SendKeys(coverlettertxt)
 
-		time.Sleep(5000 * time.Millisecond)
+		time.Sleep(4000 * time.Millisecond)
 
 	}
 	//*[@id="content"]/div[2]/div[2]/form/div[5]/input
@@ -261,6 +261,8 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 		}
 
 	}
+
+	time.Sleep(3000 * time.Millisecond)
 
 	return reCaph
 
@@ -378,7 +380,7 @@ func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
 	pdf.CellFormat(0, 4, "Virtualization(LinuxKVM-Docker-Kubernetes),", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "Unit tests(Selenium-Protractor-Ginkgo)", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "SEO(Organic Web Search Optimization).", "", 1, "L", false, 0, "")
-	pdf.CellFormat(110, 8, "My Development IDE: Eclipse/Visual Studio Code  <---> Git(GitHub/GtLab).", "BT", 1, "L", false, 0, "")
+	pdf.CellFormat(110, 8, "My Development IDE: Eclipse/Visual Studio Code  <---> Git(GitHub/GitLab).", "BT", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "Start from 2013 most of my projects openly disposed.", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "So for understanding my capacity you need only small expertice of my projects.", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "I hope you find all necessary information on Sites:", "", 1, "L", false, 0, "")
