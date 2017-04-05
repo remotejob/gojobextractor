@@ -13,8 +13,9 @@ import (
 	"github.com/remotejob/go_cv_pdf/toml_parser"
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/coverletter"
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/mytags"
-	"github.com/remotejob/gojobextractor/dbhandler"
+
 	"github.com/remotejob/gojobextractor/domains"
+	"github.com/remotejob/gojobextractor/elasticLoader/loader/dbhandler"
 	"github.com/tebeka/selenium"
 	"gopkg.in/mgo.v2"
 )
@@ -236,7 +237,8 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 		time.Sleep(5000 * time.Millisecond)
 
 	}
-	if subbuttom, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[8]/input"); err == nil {
+	//*[@id="content"]/div[2]/div[2]/form/div[5]/input
+	if subbuttom, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[5]/input"); err == nil {
 		log.Println("Submit OK")
 		jo.Applied = true
 		jo.UpdateApplyedEmployer(dbsession)
@@ -254,6 +256,8 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 			time.Sleep(3000 * time.Millisecond)
 			submitbtm.Submit()
 
+		} else {
+			log.Println("NO SUBMIT 2 !!!")
 		}
 
 	}
@@ -359,7 +363,11 @@ func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
 	pdf.SetFont("Arial", "", 9)
 	pdf.CellFormat(0, 4, "I have many years of practical experience in DataBases/Communication/Voip/Webdev.", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "Last 5 years mostly was dedicated to Docker/Golang/JavaScript/NoSqlDB.", "", 1, "L", false, 0, "")
-	pdf.CellFormat(0, 4, "But I try to keep as mush as possible updated my old knowledge C/Java...", "", 1, "L", false, 0, "")
+	pdf.CellFormat(0, 4, "But I try to keep as much as possible updated my old knowledge C/Java...", "", 1, "L", false, 0, "")
+	pdf.CellFormat(0, 4, "Actually I have contract with Middlesex University (London) but it's temporary till 2018", "", 1, "L", false, 0, "")
+	pdf.CellFormat(0, 4, "project related to elaboration Big Data (RDF/Elasticsearch technology)", "", 1, "L", false, 0, "")
+	pdf.CellFormat(0, 4, "so I think it's time to look for a new job.", "", 1, "L", false, 0, "")
+	pdf.CellFormat(0, 4, "Please do not hesitate to contact me if you need any further clarification.", "", 1, "L", false, 0, "")
 	pdf.Ln(-1)
 	pdf.CellFormat(30, 5, "I can be useful in:", "B", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "Programming languages (Golang-JAVA-C-RUBY-JavaScript)", "", 1, "L", false, 0, "")
@@ -372,7 +380,7 @@ func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
 	pdf.CellFormat(0, 4, "SEO(Organic Web Search Optimization).", "", 1, "L", false, 0, "")
 	pdf.CellFormat(110, 8, "My Development IDE: Eclipse/Visual Studio Code  <---> Git(GitHub/GtLab).", "BT", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "Start from 2013 most of my projects openly disposed.", "", 1, "L", false, 0, "")
-	pdf.CellFormat(0, 4, "So for undestanding my capasity you need only small expertice of my projects.", "", 1, "L", false, 0, "")
+	pdf.CellFormat(0, 4, "So for understanding my capacity you need only small expertice of my projects.", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "I hope you find all necessary information on Sites:", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "http://mazurov.eu", "", 1, "L", false, 0, "")
 	pdf.CellFormat(0, 4, "https://github.com/sinelga  ---> 83 projects", "", 1, "L", false, 0, "https://github.com/sinelga")

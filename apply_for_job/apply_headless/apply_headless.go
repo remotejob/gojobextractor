@@ -6,8 +6,9 @@ import (
 	"time"
 
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link"
-	"github.com/remotejob/gojobextractor/dbhandler"
+
 	"github.com/remotejob/gojobextractor/domains"
+	"github.com/remotejob/gojobextractor/elasticLoader/loader/dbhandler"
 	"github.com/tebeka/selenium"
 	"gopkg.in/gcfg.v1"
 	"gopkg.in/mgo.v2"

@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/csv"
 
-	"github.com/remotejob/gojobextractor/dbhandler"
 	"github.com/remotejob/gojobextractor/domains"
+	"github.com/remotejob/gojobextractor/elasticLoader/loader/dbhandler"
 	//	"flag"
 	"fmt"
 	"log"
