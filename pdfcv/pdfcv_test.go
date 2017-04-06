@@ -10,8 +10,9 @@ import (
 	mgo "gopkg.in/mgo.v2"
 
 	"github.com/remotejob/gojobextractor/apply_for_job/handle_internal_link/mytags"
-	"github.com/remotejob/gojobextractor/dbhandler"
+
 	"github.com/remotejob/gojobextractor/domains"
+	"github.com/remotejob/gojobextractor/elasticLoader/loader/dbhandler"
 )
 
 var login string

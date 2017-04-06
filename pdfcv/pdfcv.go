@@ -13,6 +13,7 @@ func CreateCV(emplayer domains.JobOffer, mytags []domains.Tags) {
 
 	bconfig := toml_parser.Parse("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/cv.toml")
 	header := []string{"Item", "Duration", "Info"}
+	jobplaceheader := []string{"Company", "Duration", "Position", "Details", "Location", "Country"}
 	// jobplaceheader := []string{"Company", "Duration", "Position", "Details", "Location", "Country"}
 
 	pdf := gofpdf.New("P", "mm", "A4", "")
@@ -163,6 +164,105 @@ func CreateCV(emplayer domains.JobOffer, mytags []domains.Tags) {
 
 		}
 	}
+
+	bjob := toml_parser.ParseWorkPlaces("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/jobs.toml")
+
+	pdf.SetHeaderFunc(func() {
+
+		pdf.Image("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/images/me_alex.jpg", 10, 10, 60, 0, false, "", 0, "")
+		pdf.SetY(5)
+		pdf.SetFont("Arial", "I", 10)
+		pdf.SetX(110)
+		pdf.CellFormat(70, 10, bjob.Subtitle, "", 0, "C", false, 0, "")
+		pdf.Ln(-1)
+		pdf.SetFont("Arial", "B", 15)
+		pdf.SetX(90)
+		pdf.CellFormat(70, 10, bjob.Maintitle, "", 0, "C", false, 0, "")
+		pdf.Ln(-1)
+		pdf.SetFont("Arial", "", 10)
+		pdf.SetX(95)
+		pdf.CellFormat(20, 6, "Phone:", "LRT", 0, "", false, 0, "")
+		pdf.CellFormat(65, 6, "+358451202801", "LRT", 0, "", false, 0, "")
+		pdf.Ln(-1)
+		pdf.SetX(95)
+		pdf.CellFormat(20, 6, "Email:", "LRT", 0, "", false, 0, "")
+		pdf.CellFormat(65, 6, "support@mazurov.eu", "LRT", 0, "", false, 0, "")
+		pdf.Ln(-1)
+		pdf.SetX(95)
+		pdf.CellFormat(20, 6, "Web:", "LRT", 0, "", false, 0, "")
+		pdf.CellFormat(65, 6, "http://mazurov.eu", "LRT", 0, "", false, 0, "")
+		pdf.Ln(-1)
+
+		pdf.SetX(95)
+		pdf.CellFormat(20, 6, "Skype:", "LRT", 0, "", false, 0, "")
+		pdf.CellFormat(65, 6, "mazurovfi", "LRT", 0, "", false, 0, "")
+		pdf.Ln(-1)
+		pdf.SetX(95)
+		pdf.CellFormat(20, 6, "Address:", "LRT", 0, "", false, 0, "")
+		pdf.CellFormat(65, 6, "Hogberginkuja 1 Lappohja", "LRT", 0, "", false, 0, "")
+		pdf.Ln(-1)
+		pdf.SetX(95)
+		pdf.CellFormat(20, 6, "", "LRB", 0, "", false, 0, "")
+		pdf.CellFormat(65, 6, "10820 Finland", "LRB", 0, "", false, 0, "")
+
+		pdf.Ln(20)
+	})
+
+	pdf.AddPage()
+
+	wjobplace := []float64{35, 15, 20, 55, 35, 15}
+
+	for _, job := range bjob.Jobs {
+
+		pdf.SetFont("Arial", "B", 15)
+		pdf.CellFormat(0, 10, job.Name, "", 1, "", false, 0, "")
+
+		pdf.SetFillColor(100, 149, 237)
+		pdf.SetTextColor(255, 255, 255)
+		pdf.SetDrawColor(128, 0, 0)
+		pdf.SetLineWidth(.3)
+		pdf.SetFont("Arial", "", 8)
+
+		for j, str := range jobplaceheader {
+			pdf.CellFormat(wjobplace[j], 7, str, "1", 0, "C", true, 0, "")
+		}
+		pdf.Ln(-1)
+
+		pdf.SetFillColor(224, 235, 255)
+		pdf.SetTextColor(0, 0, 0)
+		pdf.SetFont("", "", 0)
+
+		fill := false
+
+		for i, item := range job.Item {
+
+			if i == len(job.Item)-1 {
+
+				pdf.CellFormat(wjobplace[0], 6, item.Title, "LRB", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[1], 6, item.Duration, "LRB", 0, "R", fill, 0, "")
+				pdf.CellFormat(wjobplace[2], 6, item.Position, "LRB", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[3], 6, item.Details, "LRB", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[4], 6, item.Location, "LRB", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[5], 6, item.Country, "LRB", 0, "", fill, 0, "")
+
+			} else {
+
+				pdf.CellFormat(wjobplace[0], 6, item.Title, "LR", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[1], 6, item.Duration, "LR", 0, "R", fill, 0, "")
+				pdf.CellFormat(wjobplace[2], 6, item.Position, "LR", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[3], 6, item.Details, "LR", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[4], 6, item.Location, "LR", 0, "", fill, 0, "")
+				pdf.CellFormat(wjobplace[5], 6, item.Country, "LR", 0, "", fill, 0, "")
+
+			}
+			pdf.Ln(-1)
+
+			fill = !fill
+
+		}
+
+	}
+
 	err := pdf.OutputFileAndClose("/tmp/my_cv.pdf")
 	if err == nil {
 		fmt.Println("Successfully generated my_cv.pdf")
