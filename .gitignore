@@ -8,6 +8,7 @@ _obj
 _test
 config.gcfg
 config/config.gcfg.*
+config/blocked/
 applyto.txt
 cant_apply.txt
 all_cant_apply.txt

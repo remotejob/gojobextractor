@@ -200,11 +200,8 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 	}
 
-	// 	if len(frms) == 0 {
-
 	if form, err := page.FindElement(selenium.ByID, "file-upload-form"); err == nil {
 
-		// log.Println("file-upload-form OK")
 		mytagstoinsert = mytags.GetMyTags("mytags.csv", jo.Tags)
 		if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
 
@@ -278,7 +275,19 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 	}
 
-	time.Sleep(3000 * time.Millisecond)
+	time.Sleep(6000 * time.Millisecond)
+	//*[@id="content"]/div[2]/div/div[1]/div[1]/div[1]
+
+	// #content > div.content.proxy > div > div.main.-col9 > div.js-header > div.index-hedMessage._success
+
+	if _, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div/div[1]/div[1]/div[1]"); err == nil {
+
+		log.Println("index-hedMessage_success")
+
+	} else {
+
+		log.Println("index-hedMessage_success NO success !!!!?")
+	}
 
 	return reCaph
 
