@@ -39,7 +39,7 @@ func init() {
 		password = cfg.Dbmgo.Password
 		mechanism = cfg.Dbmgo.Mechanism
 		// cvpdf = cfg.Cvpdf.File
-		cvpdf = "/tmp/my_cv.pdf"
+		cvpdf = "/tmp/mazurov_cv.pdf"
 	}
 
 }
@@ -110,7 +110,7 @@ func main() {
 
 			fmt.Println("id", results[i].Id)
 
-			employer := handle_internal_link.NewInternalJobOffers(results[i])
+			employer := handle_internal_link.NewInternalJobOffers(results[i], login)
 			reCaph := (*employer).Apply_headless(*dbsession, wd, results[i].Id, cvpdf)
 
 			if reCaph {

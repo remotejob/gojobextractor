@@ -32,9 +32,10 @@ type InternalJobOffer struct {
 	Created_at   time.Time
 	Applied      bool
 	Description  string
+	Login        string
 }
 
-func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
+func NewInternalJobOffers(job domains.JobOffer, login string) *InternalJobOffer {
 
 	return &InternalJobOffer{
 
@@ -49,6 +50,7 @@ func NewInternalJobOffers(job domains.JobOffer) *InternalJobOffer {
 		Created_at:   job.Created_at,
 		Applied:      job.Applied,
 		Description:  job.Description,
+		Login:        login,
 	}
 
 }
@@ -209,7 +211,289 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 			for _, input := range allinputs {
 				if type_atr, err := input.GetAttribute("type"); err == nil {
 					if type_atr == "file" {
+						// if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
 
+						// 	if frms, err := form.FindElements(selenium.ByTagName, "iframe"); err == nil {
+
+						// 		log.Println("Check recapha if 1", len(frms))
+
+						// 		if len(frms) == 0 {
+
+						// 			if applydialog_style, err := form.GetAttribute("style"); err == nil {
+
+						// 				if strings.HasPrefix(applydialog_style, "display: none") {
+
+						// 					fmt.Println(" need move Up and try again")
+
+						// 					fmt.Println(link.Location())
+						// 					linkloc, _ := link.Location()
+						// 					x := linkloc.X
+						// 					y := linkloc.Y
+						// 					rawscript := "scroll(" + strconv.Itoa(y) + "," + strconv.Itoa(x) + ")"
+						// 					fmt.Println(rawscript)
+						// 					args := []interface{}{}
+						// 					page.ExecuteScriptRaw(rawscript, args)
+
+						// 					time.Sleep(2000 * time.Millisecond)
+						// 					if err := link.Click(); err != nil {
+
+						// 						fmt.Println("error clicking ", err.Error())
+						// 						fmt.Println(link.Location())
+						// 						if err := link.Click(); err != nil {
+						// 							fmt.Println("SECOND error clicking!! ", err.Error())
+
+						// 						}
+
+						// 					} else {
+						// 						fmt.Println("Click on link OK")
+
+						// 					}
+
+						// 					time.Sleep(1000 * time.Millisecond)
+
+						// 				}
+
+						// 				if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
+
+						// 					fmt.Println("allinputs", len(allinputs))
+
+						// 					mytagstoinsert := mytags.GetMyTags("mytags.csv", jo.Tags)
+
+						// 					if len(allinputs) == 12 {
+
+						// 						for _, input := range allinputs {
+
+						// 							if type_atr, err := input.GetAttribute("type"); err == nil {
+						// 								if type_atr == "file" {
+
+						// 									log.Println("need create new PDF file")
+						// 									jo.CreatePdfCv(mytagstoinsert)
+						// 									time.Sleep(3000 * time.Millisecond)
+						// 									input.SendKeys(cvpdf)
+						// 									time.Sleep(3000 * time.Millisecond)
+
+						// 								}
+
+						// 							}
+
+						// 						}
+
+						// 						coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter_simple.csv")
+
+						// 						if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
+
+						// 							log.Println("ready submit!!")
+						// 							coverletter.SendKeys(coverlettertxt)
+
+						// 							time.Sleep(2000 * time.Millisecond)
+
+						// 							if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
+
+						// 								// fmt.Printf("Please enter an integer: ")
+
+						// 								// // Read in an integer
+						// 								// var i int
+						// 								// _, err := fmt.Scanln(&i)
+						// 								// if err != nil {
+						// 								// 	fmt.Printf("Error: %s", err.Error())
+
+						// 								// 	// If int read fails, read as string and forget
+						// 								// 	var discard string
+						// 								// 	fmt.Scanln(&discard)
+						// 								// 	// return
+						// 								// }
+
+						// 								log.Println("Try submit!!")
+						// 								time.Sleep(3000 * time.Millisecond)
+						// 								submitbtm.Submit()
+
+						// 								// fmt.Printf("Please enter an integer: ")
+
+						// 								// // Read in an integer
+						// 								// var i int
+						// 								// _, err := fmt.Scanln(&i)
+						// 								// if err != nil {
+						// 								// 	fmt.Printf("Error: %s", err.Error())
+
+						// 								// 	// If int read fails, read as string and forget
+						// 								// 	var discard string
+						// 								// 	fmt.Scanln(&discard)// if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
+
+						// 	if frms, err := form.FindElements(selenium.ByTagName, "iframe"); err == nil {
+
+						// 		log.Println("Check recapha if 1", len(frms))
+
+						// 		if len(frms) == 0 {
+
+						// 			if applydialog_style, err := form.GetAttribute("style"); err == nil {
+
+						// 				if strings.HasPrefix(applydialog_style, "display: none") {
+
+						// 					fmt.Println(" need move Up and try again")
+
+						// 					fmt.Println(link.Location())
+						// 					linkloc, _ := link.Location()
+						// 					x := linkloc.X
+						// 					y := linkloc.Y
+						// 					rawscript := "scroll(" + strconv.Itoa(y) + "," + strconv.Itoa(x) + ")"
+						// 					fmt.Println(rawscript)
+						// 					args := []interface{}{}
+						// 					page.ExecuteScriptRaw(rawscript, args)
+
+						// 					time.Sleep(2000 * time.Millisecond)
+						// 					if err := link.Click(); err != nil {
+
+						// 						fmt.Println("error clicking ", err.Error())
+						// 						fmt.Println(link.Location())
+						// 						if err := link.Click(); err != nil {
+						// 							fmt.Println("SECOND error clicking!! ", err.Error())
+
+						// 						}
+
+						// 					} else {
+						// 						fmt.Println("Click on link OK")
+
+						// 					}
+
+						// 					time.Sleep(1000 * time.Millisecond)
+
+						// 				}
+
+						// 				if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
+
+						// 					fmt.Println("allinputs", len(allinputs))
+
+						// 					mytagstoinsert := mytags.GetMyTags("mytags.csv", jo.Tags)
+
+						// 					if len(allinputs) == 12 {
+
+						// 						for _, input := range allinputs {
+
+						// 							if type_atr, err := input.GetAttribute("type"); err == nil {
+						// 								if type_atr == "file" {
+
+						// 									log.Println("need create new PDF file")
+						// 									jo.CreatePdfCv(mytagstoinsert)
+						// 									time.Sleep(3000 * time.Millisecond)
+						// 									input.SendKeys(cvpdf)
+						// 									time.Sleep(3000 * time.Millisecond)
+
+						// 								}
+
+						// 							}
+
+						// 						}
+
+						// 						coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter_simple.csv")
+
+						// 						if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
+
+						// 							log.Println("ready submit!!")
+						// 							coverletter.SendKeys(coverlettertxt)
+
+						// 							time.Sleep(2000 * time.Millisecond)
+
+						// 							if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
+
+						// 								// fmt.Printf("Please enter an integer: ")
+
+						// 								// // Read in an integer
+						// 								// var i int
+						// 								// _, err := fmt.Scanln(&i)
+						// 								// if err != nil {
+						// 								// 	fmt.Printf("Error: %s", err.Error())
+
+						// 								// 	// If int read fails, read as string and forget
+						// 								// 	var discard string
+						// 								// 	fmt.Scanln(&discard)
+						// 								// 	// return
+						// 								// }
+
+						// 								log.Println("Try submit!!")
+						// 								time.Sleep(3000 * time.Millisecond)
+						// 								submitbtm.Submit()
+
+						// 								// fmt.Printf("Please enter an integer: ")
+
+						// 								// // Read in an integer
+						// 								// var i int
+						// 								// _, err := fmt.Scanln(&i)
+						// 								// if err != nil {
+						// 								// 	fmt.Printf("Error: %s", err.Error())
+
+						// 								// 	// If int read fails, read as string and forget
+						// 								// 	var discard string
+						// 								// 	fmt.Scanln(&discard)
+						// 								// 	// return
+						// 								// }
+
+						// 								jo.Applied = true
+						// 								jo.UpdateApplyedEmployer(dbsession)
+
+						// 							}
+						// 							time.Sleep(1000 * time.Millisecond)
+
+						// 						}
+
+						// 					} else {
+
+						// 						fmt.Println("!!!Input num not ==12")
+
+						// 					}
+
+						// 				} else {
+
+						// 					fmt.Println(err.Error())
+						// 				}
+						// 			}
+						// 		} else {
+
+						// 			log.Println("recapha PRESENT", len(frms))
+						// 			reCaph = true
+
+						// 		}
+
+						// 	}
+
+						// } else {
+
+						// 	fmt.Println(err.Error())
+						// }
+						// 								// 	// return
+						// 								// }
+
+						// 								jo.Applied = true
+						// 								jo.UpdateApplyedEmployer(dbsession)
+
+						// 							}
+						// 							time.Sleep(1000 * time.Millisecond)
+
+						// 						}
+
+						// 					} else {
+
+						// 						fmt.Println("!!!Input num not ==12")
+
+						// 					}
+
+						// 				} else {
+
+						// 					fmt.Println(err.Error())
+						// 				}
+						// 			}
+						// 		} else {
+
+						// 			log.Println("recapha PRESENT", len(frms))
+						// 			reCaph = true
+
+						// 		}
+
+						// 	}
+
+						// } else {
+
+						// 	fmt.Println(err.Error())
+						// }
 						log.Println("need create new PDF file")
 						jo.CreatePdfCv(mytagstoinsert)
 						time.Sleep(3000 * time.Millisecond)
@@ -237,8 +521,8 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 	//*[@id="content"]/div[2]/div[2]/form/div[5]/input
 	if subbuttom, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[5]/input"); err == nil {
 		log.Println("Submit OK")
-		jo.Applied = true
-		jo.UpdateApplyedEmployer(dbsession)
+		// jo.Applied = true
+		// jo.UpdateApplyedEmployer(dbsession)
 		time.Sleep(3000 * time.Millisecond)
 		subbuttom.Submit()
 
@@ -246,47 +530,84 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 		log.Println("NO SUBMIT 1 !!!")
 
-		if custom_question_217002, err := page.FindElement(selenium.ByID, "custom_question_217002"); err == nil {
+		if custom_questions, err := page.FindElements(selenium.ByTagName, "select"); err == nil {
 
-			if options, err := custom_question_217002.FindElements(selenium.ByTagName, "option"); err == nil {
+			log.Println("custom_questions len", len(custom_questions))
 
-				options[0].Click()
+			for _, customQuestion := range custom_questions {
 
-			} else {
+				if options, err := customQuestion.FindElements(selenium.ByTagName, "option"); err == nil {
+					log.Println("options1 len", len(options))
 
-				log.Println("Client Options !!")
+					options[1].Click()
+
+					time.Sleep(2000 * time.Millisecond)
+					log.Println("Find other Submit subbuttom")
+
+					// Find other Submit subbuttom
+
+					//*[@id="content"]/div[2]/div[2]/form/div[7]/input
+
+					//*[@id="content"]/div[2]/div[2]/form/div[5]/input
+					if subbuttom2, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[7]/input"); err == nil {
+						log.Println("Submit2 OK")
+						// jo.Applied = true
+						// jo.UpdateApplyedEmployer(dbsession)
+						time.Sleep(3000 * time.Millisecond)
+						subbuttom2.Submit()
+
+					} else {
+
+						log.Println("Cant find subbuttom2  NO !!")
+
+					}
+
+				} else {
+
+					log.Println("Client Options !!")
+				}
+
 			}
 
-		} else {
-			log.Println("!custom_question_217002 !!")
 		}
-
-		// if submitbtm, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div[2]/form/div[8]/input"); err == nil {
-		// 	log.Println("SUBMIT 2 OK")
-
-		// 	jo.Applied = true
-		// 	jo.UpdateApplyedEmployer(dbsession)
-		// 	time.Sleep(3000 * time.Millisecond)
-		// 	submitbtm.Submit()
-
-		// } else {
-		// 	log.Println("NO SUBMIT 2 !!!")
-		// }
 
 	}
 
-	time.Sleep(6000 * time.Millisecond)
+	time.Sleep(5000 * time.Millisecond)
 	//*[@id="content"]/div[2]/div/div[1]/div[1]/div[1]
 
 	// #content > div.content.proxy > div > div.main.-col9 > div.js-header > div.index-hedMessage._success
 
 	if _, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div/div[1]/div[1]/div[1]"); err == nil {
 
-		log.Println("index-hedMessage_success")
+		log.Println("index-hedMessage_success OK", jo.Login)
+
+		jo.Applied = true
+		jo.UpdateApplyedEmployer(dbsession)
+
+		file, err := os.OpenFile("good_account.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		if _, err = file.WriteString(jo.Login + "\n"); err != nil {
+			panic(err)
+		}
 
 	} else {
 
-		log.Println("index-hedMessage_success NO success !!!!?")
+		log.Println("index-hedMessage_success NO success !!!!?", jo.Login)
+
+		file, err := os.OpenFile("bad_account.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		if _, err = file.WriteString(jo.Login + "\n"); err != nil {
+			panic(err)
+		}
 	}
 
 	return reCaph
@@ -569,153 +890,10 @@ func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
 
 	}
 
-	err := pdf.OutputFileAndClose("/tmp/my_cv.pdf")
+	err := pdf.OutputFileAndClose("/tmp/mazurov_cv.pdf")
 	if err == nil {
-		fmt.Println("Successfully generated my_cv.pdf")
+		fmt.Println("Successfully generated mazurov_cv.pdf")
 	} else {
 		fmt.Println(err)
 	}
 }
-
-// if form, err := page.FindElement(selenium.ByID, "apply-dialog"); err == nil {
-
-// 	if frms, err := form.FindElements(selenium.ByTagName, "iframe"); err == nil {
-
-// 		log.Println("Check recapha if 1", len(frms))
-
-// 		if len(frms) == 0 {
-
-// 			if applydialog_style, err := form.GetAttribute("style"); err == nil {
-
-// 				if strings.HasPrefix(applydialog_style, "display: none") {
-
-// 					fmt.Println(" need move Up and try again")
-
-// 					fmt.Println(link.Location())
-// 					linkloc, _ := link.Location()
-// 					x := linkloc.X
-// 					y := linkloc.Y
-// 					rawscript := "scroll(" + strconv.Itoa(y) + "," + strconv.Itoa(x) + ")"
-// 					fmt.Println(rawscript)
-// 					args := []interface{}{}
-// 					page.ExecuteScriptRaw(rawscript, args)
-
-// 					time.Sleep(2000 * time.Millisecond)
-// 					if err := link.Click(); err != nil {
-
-// 						fmt.Println("error clicking ", err.Error())
-// 						fmt.Println(link.Location())
-// 						if err := link.Click(); err != nil {
-// 							fmt.Println("SECOND error clicking!! ", err.Error())
-
-// 						}
-
-// 					} else {
-// 						fmt.Println("Click on link OK")
-
-// 					}
-
-// 					time.Sleep(1000 * time.Millisecond)
-
-// 				}
-
-// 				if allinputs, err := form.FindElements(selenium.ByTagName, "input"); err == nil {
-
-// 					fmt.Println("allinputs", len(allinputs))
-
-// 					mytagstoinsert := mytags.GetMyTags("mytags.csv", jo.Tags)
-
-// 					if len(allinputs) == 12 {
-
-// 						for _, input := range allinputs {
-
-// 							if type_atr, err := input.GetAttribute("type"); err == nil {
-// 								if type_atr == "file" {
-
-// 									log.Println("need create new PDF file")
-// 									jo.CreatePdfCv(mytagstoinsert)
-// 									time.Sleep(3000 * time.Millisecond)
-// 									input.SendKeys(cvpdf)
-// 									time.Sleep(3000 * time.Millisecond)
-
-// 								}
-
-// 							}
-
-// 						}
-
-// 						coverlettertxt := coverletter.Create(mytagstoinsert, "coverletter_simple.csv")
-
-// 						if coverletter, err := form.FindElement(selenium.ByID, "CoverLetter"); err == nil {
-
-// 							log.Println("ready submit!!")
-// 							coverletter.SendKeys(coverlettertxt)
-
-// 							time.Sleep(2000 * time.Millisecond)
-
-// 							if submitbtm, err := form.FindElement(selenium.ByID, "apply-submit"); err == nil {
-
-// 								// fmt.Printf("Please enter an integer: ")
-
-// 								// // Read in an integer
-// 								// var i int
-// 								// _, err := fmt.Scanln(&i)
-// 								// if err != nil {
-// 								// 	fmt.Printf("Error: %s", err.Error())
-
-// 								// 	// If int read fails, read as string and forget
-// 								// 	var discard string
-// 								// 	fmt.Scanln(&discard)
-// 								// 	// return
-// 								// }
-
-// 								log.Println("Try submit!!")
-// 								time.Sleep(3000 * time.Millisecond)
-// 								submitbtm.Submit()
-
-// 								// fmt.Printf("Please enter an integer: ")
-
-// 								// // Read in an integer
-// 								// var i int
-// 								// _, err := fmt.Scanln(&i)
-// 								// if err != nil {
-// 								// 	fmt.Printf("Error: %s", err.Error())
-
-// 								// 	// If int read fails, read as string and forget
-// 								// 	var discard string
-// 								// 	fmt.Scanln(&discard)
-// 								// 	// return
-// 								// }
-
-// 								jo.Applied = true
-// 								jo.UpdateApplyedEmployer(dbsession)
-
-// 							}
-// 							time.Sleep(1000 * time.Millisecond)
-
-// 						}
-
-// 					} else {
-
-// 						fmt.Println("!!!Input num not ==12")
-
-// 					}
-
-// 				} else {
-
-// 					fmt.Println(err.Error())
-// 				}
-// 			}
-// 		} else {
-
-// 			log.Println("recapha PRESENT", len(frms))
-// 			reCaph = true
-
-// 		}
-
-// 	}
-
-// } else {
-
-// 	fmt.Println(err.Error())
-// }
