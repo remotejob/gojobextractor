@@ -102,12 +102,17 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 
 		for i := 0; i < count_links; i++ {
 
-			if data_jobid, err := alllinks[i].GetAttribute("data-jobid"); err == nil {
+			// if data_jobid, err := alllinks[i].GetAttribute("data-jobid"); err == nil {
+
+			if data_jobid, err := alllinks[i].GetAttribute("data-analyticurl"); err == nil {
 
 				text, _ := alllinks[i].Text()
-				id, _ := alllinks[i].GetAttribute("id")
+				href, _ := alllinks[i].GetAttribute("href")
+				// id, _ := alllinks[i].GetAttribute("id")
 
-				if text == "apply now" && id == "apply" {
+				// if text == "apply now" && id == "apply" {
+
+				if text == "apply now" && strings.HasPrefix(href, "http://stackoverflow.com/jobs/apply/") {
 					idtoapply = i
 					fmt.Println("apply id", idtoapply, data_jobid)
 
@@ -306,7 +311,7 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 		}
 		defer file.Close()
 
-		if _, err = file.WriteString(jo.Login + "\n"); err != nil {
+		if _, err = file.WriteString(jo.Login + " " + jo.Id + "\n"); err != nil {
 			panic(err)
 		}
 	}
