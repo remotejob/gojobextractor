@@ -264,11 +264,30 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 		}
 
 	}
-	time.Sleep(2000 * time.Millisecond)
 
-	//#content > div.content.proxy > div.j-full-page-apply.g-column.g-col7 > form > div.button-group > input
-	//*[@id="content"]/div[2]/div[2]/form/div[5]/input
-	// if inputel, err := page.FindElement(selenium.ByXPATH, "//input[@type='submit']"); err == nil {
+	if customInputs, err := page.FindElements(selenium.ByTagName, "input"); err == nil {
+
+		log.Println("customInputs len", len(customInputs))
+
+		for _, customInput := range customInputs {
+
+			if idatt, err := customInput.GetAttribute("id"); err == nil {
+
+				// log.Println(idatt)
+
+				if strings.HasPrefix(idatt, "custom-question") {
+
+					customInput.SendKeys("http://mazurov.eu")
+
+				}
+
+			}
+
+		}
+	}
+
+	time.Sleep(3000 * time.Millisecond)
+
 	if inputels, err := page.FindElements(selenium.ByClassName, "j-apply-btn"); err == nil {
 
 		log.Println("SubmitOK", len(inputels))
@@ -283,41 +302,67 @@ func (jo *InternalJobOffer) ElaborateFrame_headless(dbsession mgo.Session, page 
 
 	time.Sleep(5000 * time.Millisecond)
 
+	//*[@id="content"]/div[2]/div/div[1]/div[1]/div[1]
+
 	if success, err := page.FindElement(selenium.ByXPATH, "//*[@id=\"content\"]/div[2]/div/div[1]/div[1]/div[1]"); err == nil {
 
 		textSuccess, _ := success.Text()
 		log.Println("index-hedMessage_success OK", textSuccess, jo.Login)
 
-		jo.Applied = true
-		jo.UpdateApplyedEmployer(dbsession)
+		if strings.HasPrefix(textSuccess, "Awesome!") {
 
-		file, err := os.OpenFile("good_account.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
-		if err != nil {
-			panic(err)
-		}
-		defer file.Close()
+			jo.Applied = true
+			jo.UpdateApplyedEmployer(dbsession)
 
-		if _, err = file.WriteString(jo.Login + "\n"); err != nil {
-			panic(err)
+			file, err := os.OpenFile("good_account.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+			if err != nil {
+				panic(err)
+			}
+			defer file.Close()
+
+			if _, err = file.WriteString(jo.Login + "\n"); err != nil {
+				panic(err)
+			}
+
+		} else {
+
+			log.Println("No text Awesome!!!!!!")
+
+			jo.MarkBadAccount("bad_account.txt")
+
+			reCaph = true
+
+			return reCaph
+
 		}
 
 	} else {
 
-		log.Println("index-hedMessage_success NO success !!!!?", jo.Login)
+		jo.MarkBadAccount("bad_account.txt")
 
-		file, err := os.OpenFile("bad_account.txt", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
-		if err != nil {
-			panic(err)
-		}
-		defer file.Close()
+		reCaph = true
 
-		if _, err = file.WriteString(jo.Login + " " + jo.Id + "\n"); err != nil {
-			panic(err)
-		}
+		return reCaph
+
 	}
 
 	return reCaph
 
+}
+
+func (jo *InternalJobOffer) MarkBadAccount(filestr string) {
+
+	log.Println("index-hedMessage_success NO success !!!!?", jo.Login)
+
+	file, err := os.OpenFile(filestr, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	if _, err = file.WriteString(jo.Login + " " + jo.Id + "\n"); err != nil {
+		panic(err)
+	}
 }
 
 func (jo *InternalJobOffer) UpdateApplyedEmployer(dbsession mgo.Session) {
