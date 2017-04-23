@@ -1,0 +1,94 @@
+maintitle ="Aleksander Mazurov"
+subtitle ="Work Experience"
+[[jobs]]
+name = "Positions and places"
+path = "Programming-languages.html"
+img="assets/images/"
+
+[[jobs.item]]
+  title="MIDDLESEX UNIVERSITY"
+  rank = 9
+  duration = "2017-......"
+  position = "Programmer"
+  details = "Big Data Elaboration EU project"
+  location = "London"
+  country = "ENGLAND"
+
+[[jobs.item]]
+  title="FREELANCER"
+  rank = 8
+  duration = "2015-2017"
+  position = "Freelancer"
+  details = "Programming"
+  location = "Hanko (Uusimaa)"
+  country = "FINLAND"
+[[jobs.item]]
+  title="KRASAVA OY"
+  rank = 7
+  duration = "2009-2015"
+  position = "Programmer"
+  details = "Telecommunication/WebApp"
+  location = "Espoo"
+  country = "FINLAND"
+
+[[jobs.item]]
+  title="X-PHONE-COM OY"
+  rank = 6
+  duration = "1998-2009"
+  position = "Programmer"
+  details = "Telecommunication App"
+  location = "Helsinki"
+  country = "FINLAND"   
+[[jobs.item]]
+  title="Private Activity"
+  rank = 5
+  duration = "1993-1998"
+  position = "Engineer"
+  details = "Consulting/Data Elaboration/Programming"
+  location = "St.Petersburg"
+  country = "RUSSIA"
+
+[[jobs.item]]
+  title="ZANOTTI S.P.A"
+  rank = 4
+  duration = "1990-1993"
+  position = "Engineer"
+  details = "Commerce Data Elaboration"
+  location = "St.Petersburg"
+  country = "RUSSIA"
+[[jobs.item]]
+  title="PAVAN RUSSIA"
+  rank = 3
+  duration = "1985-1990"
+  position = "Engineer"
+  details = "Commerce Data Elaboration"
+  location = "Moscow"
+  country = "RUSSIA"
+[[jobs.item]]
+  title="PAVAN GROUP"
+  rank = 2
+  duration = "1983-1985"
+  position = "Engineer"
+  details = "Commerce Data Elaboration"
+  location = "Galliera Veneta (Padova)"
+  country = "ITALY"
+[[jobs.item]]
+  title="SETA GROUP SPA"
+  rank = 1
+  duration = "1982-1983"
+  position = "Engineer"
+  details = "Production Data Elaboration"
+  location = "Roncadelle (Brescia)"
+  country = "ITALY"
+
+[[jobs.item]]
+  title="ZANUSSI SPA"
+  rank = 0
+  duration = "1980-1982"
+  position = "Programmer"
+  details = "PLC5 Controllers Programming"
+  location = "Conegliano (Treviso)"
+  country = "ITALY"
+
+
+

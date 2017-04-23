@@ -543,7 +543,7 @@ func (jo *InternalJobOffer) CreatePdfCv(tagstoinsert []domains.Tags) {
 		}
 	}
 
-	bjob := toml_parser.ParseWorkPlaces("/home/juno/gowork/src/github.com/remotejob/go_cv_pdf/jobs.toml")
+	bjob := toml_parser.ParseWorkPlaces("/home/juno/gowork/src/github.com/remotejob/gojobextractor/jobs.toml")
 
 	pdf.SetHeaderFunc(func() {
 
