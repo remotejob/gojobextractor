@@ -15,6 +15,9 @@ all_cant_apply.txt
 signuplinks.csv
 good_account.txt
 bad_account.txt
+accounts.csv
+client_secret.json
+signuplinks.csv
 
 # Architecture specific extensions/prefixes
 *.[568vq]

@@ -112,7 +112,7 @@ func (jo *InternalJobOffer) Apply_headless(dbsession mgo.Session, page selenium.
 
 				// if text == "apply now" && id == "apply" {
 
-				if text == "apply now" && strings.HasPrefix(href, "http://stackoverflow.com/jobs/apply/") {
+				if text == "Apply now" && strings.HasPrefix(href, "https://stackoverflow.com/jobs/apply/") {
 					idtoapply = i
 					fmt.Println("apply id", idtoapply, data_jobid)
 
