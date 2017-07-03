@@ -93,3 +93,6 @@ mongo --host 138.197.8.81 --port 27017 --username **** --password ***** --authen
 
 
  gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/printer -dNOPAUSE -dQUIET -dBATCH -sOutputFile=latest_cv_compressed.pdf latest_cv.pdf
+
+
+mongoexport --host 104.236.237.125 --port 27017 --username user --password "pass"  --authenticationMechanism SCRAM-SHA-1 --authenticationDatabase admin --collection employers --db cv_employers --out employers.json

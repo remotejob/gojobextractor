@@ -18,6 +18,8 @@ bad_account.txt
 accounts.csv
 client_secret.json
 signuplinks.csv
+employers.json
+employers.bleve
 
 # Architecture specific extensions/prefixes
 *.[568vq]
